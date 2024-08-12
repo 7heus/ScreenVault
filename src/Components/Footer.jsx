@@ -1,4 +1,5 @@
 import textLogo from "../assets/screenvault-text.png";
+import "./Footer.css";
 
 export default function Footer() {
   return (

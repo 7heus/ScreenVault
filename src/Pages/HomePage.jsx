@@ -1,4 +1,5 @@
 import logo from "..assets/screenvault-logo.png";
+import "./HomePage.css";
 
 export default function HomePage() {
   return (
