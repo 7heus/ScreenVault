@@ -1,0 +1,39 @@
+.AboutPage{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.Info{
+    display: flex;
+    gap: 175px;
+    margin-top: 125px;
+}
+
+.CarlosPic{
+    width: 200px;
+    height: 200px;
+    border-radius: 35%;
+}
+
+
+.MateusPic{
+    width: 200px;
+    height: 200px;
+    border-radius: 35%;
+}
+
+
+.DavidPic{
+    width: 200px;
+    height: 200px;
+    border-radius: 35%;
+}
+
+
+.aboutProject{
+    margin-top: 75px;
+}
+
+.GitHubImg{
+    width: 100px;
+    border-radius: 2.5px;
+}
