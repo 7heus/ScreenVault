@@ -20,7 +20,6 @@ export default function Navbar() {
   return (
     <nav className="Navbar">
       <img src={menuIcon} alt="menu-icon" className="menuIcon" />
-      <h3 className="searchIcon">🔍</h3>
       <input
         type="search"
         value={query}
