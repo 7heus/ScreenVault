@@ -14,6 +14,7 @@ import Add from "./Pages/Add";
 import Update from "./Pages/Update";
 import AboutUs from "./Pages/AboutUs";
 import NotFoundPage from "./Pages/NotFoundPage";
+import Navbar from "./Components/Navbar";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
