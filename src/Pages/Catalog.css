@@ -34,8 +34,6 @@
 /* Scrollbar track */ /* Let this here if we want to put the trak of scrollbar again */
 /* .movie::-webkit-scrollbar-track {
   background-color: #333; /* Track color */
-} */ 
-
 
 .card {
   flex: 0 0 5%;
