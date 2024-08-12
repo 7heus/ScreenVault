@@ -28,53 +28,54 @@ function App() {
 
   useEffect(() => {
     getPopularMovies(currentLang, popularPage).then((data) =>
-      setPopularList(data)
+      setPopularList([{ data: data }])
     );
     getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-      setTopRatedList(data)
+      setTopRatedList([{ data: data }])
     );
     getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-      setNowPlayingList(data)
+      setNowPlayingList([{ data: data }])
     );
     getUpcoming(currentLang, upcomingPage).then((data) =>
-      setUpcomingList(data)
+      setUpcomingList([{ data: data }])
     );
   }, []);
 
-  const updatePopPage = (int) =>
+  const updatePopPage = (int, callback) => {
     setPopularPage(popularPage < 1 ? 1 : popularPage + int);
-  const updateTRPage = (int) =>
+    callback(popularPage);
+  };
+  const updateTRPage = (int, callback) => {
     setTopRatedPage(topRatedPage < 1 ? 1 : topRatedPage + int);
-  const updateNPPage = (int) =>
+    callback(topRatedPage);
+  };
+  const updateNPPage = (int, callback) => {
     setNowPlayingPage(nowPlayingPage < 1 ? 1 : nowPlayingPage + int);
-  const updateUpcPage = (int) =>
+    callback(nowPlayingPage);
+  };
+  const updateUpcPage = (int, callback) => {
     setUpcomingPage(upcomingPage < 1 ? 1 : upcomingPage + int);
+    callback(upcomingPage);
+  };
 
   useEffect(() => {
-    if (popularList.page != popularPage)
+    if (!popularList[0] || popularList[0].data.page != popularPage)
       getPopularMovies(currentLang, popularPage).then((data) =>
-        setPopularList(data)
+        setPopularList([{ data: data, pageFunc: updatePopPage }])
       );
-    if (topRatedList.page != topRatedPage)
+    if (!topRatedList[0] || topRatedList[0].data.page != topRatedPage)
       getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-        setTopRatedList(data)
+        setTopRatedList([{ data: data, pageFunc: updateTRPage }])
       );
-    if (nowPlayingList.page != nowPlayingPage)
+    if (!nowPlayingList[0] || nowPlayingList[0].data.page != nowPlayingPage)
       getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-        setNowPlayingList(data)
+        setNowPlayingList([{ data: data, pageFunc: updateNPPage }])
       );
-    if (upcomingList.page != upcomingPage)
+    if (!upcomingList[0] || upcomingList[0].data.page != upcomingPage)
       getUpcoming(currentLang, upcomingPage).then((data) =>
-        setUpcomingList(data)
+        setUpcomingList([{ data: data, pageFunc: updateUpcPage }])
       );
   }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
-
-  const pageFunctions = {
-    popular: updatePopPage,
-    topRated: updateTRPage,
-    nowPlaying: updateNPPage,
-    upcoming: updateUpcPage,
-  };
 
   return (
     <Routes>
@@ -87,7 +88,6 @@ function App() {
             topRated={topRatedList}
             nowPlaying={nowPlayingList}
             upcoming={upcomingList}
-            pageFuncs={pageFunctions}
           />
         }
       />
