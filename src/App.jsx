@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./App.css";
 import { getPopularMovies, getMovieDetails } from "../lib/TMDb";
 import { Routes, Route } from "react-router-dom";
-import { getPopularMovies } from "../lib/TMDb";
 import HomePage from "./Pages/HomePage";
 import Catalog from "./Pages/Catalog";
 import Details from "./Pages/Details";
