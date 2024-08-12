@@ -41,39 +41,47 @@ function App() {
     );
   }, []);
 
-  const updatePopPage = (int, callback) => {
+  const updatePopPage = (int) => {
     setPopularPage(popularPage < 1 ? 1 : popularPage + int);
-    callback(popularPage);
   };
-  const updateTRPage = (int, callback) => {
+  const updateTRPage = (int) => {
     setTopRatedPage(topRatedPage < 1 ? 1 : topRatedPage + int);
-    callback(topRatedPage);
   };
-  const updateNPPage = (int, callback) => {
+  const updateNPPage = (int) => {
     setNowPlayingPage(nowPlayingPage < 1 ? 1 : nowPlayingPage + int);
-    callback(nowPlayingPage);
   };
-  const updateUpcPage = (int, callback) => {
+  const updateUpcPage = (int) => {
     setUpcomingPage(upcomingPage < 1 ? 1 : upcomingPage + int);
-    callback(upcomingPage);
   };
 
   useEffect(() => {
     if (!popularList[0] || popularList[0].data.page != popularPage)
       getPopularMovies(currentLang, popularPage).then((data) =>
-        setPopularList([{ data: data, pageFunc: updatePopPage }])
+        setPopularList([
+          ...popularList,
+          { data: data, pageFunc: updatePopPage },
+        ])
       );
     if (!topRatedList[0] || topRatedList[0].data.page != topRatedPage)
       getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-        setTopRatedList([{ data: data, pageFunc: updateTRPage }])
+        setTopRatedList([
+          ...topRatedList,
+          { data: data, pageFunc: updateTRPage },
+        ])
       );
     if (!nowPlayingList[0] || nowPlayingList[0].data.page != nowPlayingPage)
       getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-        setNowPlayingList([{ data: data, pageFunc: updateNPPage }])
+        setNowPlayingList([
+          ...nowPlayingList,
+          { data: data, pageFunc: updateNPPage },
+        ])
       );
     if (!upcomingList[0] || upcomingList[0].data.page != upcomingPage)
       getUpcoming(currentLang, upcomingPage).then((data) =>
-        setUpcomingList([{ data: data, pageFunc: updateUpcPage }])
+        setUpcomingList([
+          ...upcomingList,
+          { data: data, pageFunc: updateUpcPage },
+        ])
       );
   }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
 
