@@ -5,10 +5,10 @@ import textLogo from "../assets/screenvault-text.png";
 
 export default function Navbar() {
   return (
-    <nav className="">
-      <img src={menuIcon} alt="menu-icon" />
-      <h3 className="">🔍</h3>
-      <img src={textLogo} alt="logo-text" />
+    <nav className="Navbar">
+      <img src={menuIcon} alt="menu-icon" className="menuIcon" />
+      <h3 className="searchIcon">🔍</h3>
+      <img src={textLogo} alt="logo-text" className="textLogo" />
     </nav>
   );
 }
