@@ -14,7 +14,7 @@ export default function HomePage() {
         <img src={logo} alt="ScreenVault Logo" className="logo" />
       </Link>
       <h2 className="welcome">
-        Welcome the internet's most valuable entertaiment vault!
+        Welcome to the internet's most valuable entertaiment vault!
       </h2>
       <Footer />
     </div>

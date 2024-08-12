@@ -15,6 +15,7 @@ import Update from "./Pages/Update";
 import AboutUs from "./Pages/AboutUs";
 import NotFoundPage from "./Pages/NotFoundPage";
 import Navbar from "./Components/Navbar";
+import SearchResults from "./Pages/SearchResults";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
@@ -110,6 +111,7 @@ function App() {
       <Route path="/catalog/:itemId" element={<Details />} />
       <Route path="/add" element={<Add />} />
       <Route path="/update" element={<Update />} />
+      <Route path="/search" element={<SearchResults />} />
 
       <Route path="/about" element={<AboutUs />} />
 

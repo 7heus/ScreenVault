@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Card({ movie }) {
   const convertDate = (date) => {
+    if (!date) return;
     const splitted = date.split("-");
     return {
       year: splitted[0],

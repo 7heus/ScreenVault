@@ -16,6 +16,8 @@ export default function Details() {
 
   if (!movieDetails) return <p>Loading...</p>;
 
+  console.log(movieDetails);
+
   return (
     <div className="Details">
       <h1>{movieDetails.title}</h1>
