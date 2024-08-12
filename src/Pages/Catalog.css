@@ -1,0 +1,29 @@
+.page {
+  padding-top: 50px;
+}
+
+.movie {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 2;
+  align-content: center;
+  flex-direction: row;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+  scroll-snap-type: mandatory;
+}
+
+.card {
+  flex: 0 0 5%;
+}
+
+.movie-wrap .buttons {
+  display: flex;
+  justify-content: row;
+  align-items: center;
+}
+
+.movie-wrap h4 {
+  text-align: start;
+}
