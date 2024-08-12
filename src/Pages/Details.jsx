@@ -42,6 +42,7 @@ export default function Details() {
         <br />
         <br />
         <br />
+        <br />
         <a href="https://www.imdb.com/">
           <img className="IMDpic" src={IMDbpic} />
         </a>
