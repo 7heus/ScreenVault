@@ -1,0 +1,22 @@
+body{
+    background: radial-gradient(
+                circle, 
+        #5c676a, 
+        rgba(255, 0, 255, 0.0)
+            );
+            color: white;
+            }
+
+
+
+.logo{
+    width: 400px;
+    height: 400px;
+}
+
+
+
+.welcome{
+    color: white;
+    font-weight: bold;
+}

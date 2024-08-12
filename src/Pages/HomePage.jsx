@@ -11,9 +11,9 @@ export default function HomePage() {
     <div>
       <Navbar />
       <Link to="/catalog">
-        <img src={logo} alt="ScreenVault Logo" />
+        <img src={logo} alt="ScreenVault Logo" className="logo"/>
       </Link>
-      <h3>Welcome the internet's most valuable entertaiment vault!</h3>
+      <h2 className="welcome">Welcome the internet's most valuable entertaiment vault!</h2>
       <Footer />
     </div>
   );
