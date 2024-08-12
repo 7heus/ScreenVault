@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { getPopularMovies } from "../lib/TMDb";
+import { getPopularMovies, getMovieDetails } from "../lib/TMDb";
 
 function App() {
   const [count, setCount] = useState(0);
