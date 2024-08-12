@@ -13,7 +13,7 @@ export default function Card({ movie }) {
   const limitedOverview = (overview) => {
     const cutOverview = overview.split(" ");
     if (cutOverview.length >= 15) {
-      cutOverview.slice(0, 14);
+      cutOverview.splice(14, cutOverview.length);
       const joined = cutOverview.join(" ");
       return `${joined}...`;
     } else return overview;
@@ -21,11 +21,12 @@ export default function Card({ movie }) {
 
   const date = convertDate(movie.release_date);
   return (
-    <Link to={`/Catalog/${movie.id}`}>
+    <Link to={`/catalog/${movie.id}`}>
       <div className="Card">
         <img
-          src={`https://image.tmdb.org/t/p/w350/${movie.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt={movie.original_title}
+          width={350}
         />
         <h2>
           {movie.title}
