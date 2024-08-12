@@ -16,21 +16,29 @@ import AboutUs from "./Pages/AboutUs";
 import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [popularList, setPopularList] = useState(null);
-  const [topRatedList, setTopRatedList] = useState(null);
-  const [nowPlayingList, setNowPlayingList] = useState(null);
-  const [upcomingList, setUpcomingList] = useState(null);
+  const [popularPage, setPopularPage] = useState(1);
+  const [topRatedPage, setTopRatedPage] = useState(1);
+  const [nowPlayingPage, setNowPlayingPage] = useState(1);
+  const [upcomingPage, setUpcomingPage] = useState(1);
+  const [popularList, setPopularList] = useState([]);
+  const [topRatedList, setTopRatedList] = useState([]);
+  const [nowPlayingList, setNowPlayingList] = useState([]);
+  const [upcomingList, setUpcomingList] = useState([]);
 
   useEffect(() => {
-    getPopularMovies().then((data) => setPopularList(data));
-    getTopRatedMovies().then((data) => setTopRatedList(data));
-    getNowPlaying().then((data) => setNowPlayingList(data));
-    getUpcoming().then((data) => setUpcomingList(data));
+    getPopularMovies().then((data) => setPopularList([...popularList, data]));
+    getTopRatedMovies().then((data) =>
+      setTopRatedList([...topRatedList, data])
+    );
+    getNowPlaying().then((data) =>
+      setNowPlayingList([...nowPlayingList, data])
+    );
+    getUpcoming().then((data) => setUpcomingList([...upcomingList, data]));
   }, []);
 
-  const updatePopular = (lang, page) =>
-    getPopularMovies(lang, page).then((data) => setPopularList(data));
+  const updatePopular = (lang) => {
+    popularList.forEach((x) => {});
+  };
 
   const updateTopRated = (lang, page) =>
     getTopRatedMovies(lang, page).then((data) => setTopRatedList(data));
