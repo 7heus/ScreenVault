@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getMovieDetails } from "../../lib/TMDb";
 import "./Details.css";
 import IMDbpic from "../assets/IMDb.png";
+import Navbar from "../Components/Navbar";
 
 export default function Details() {
   const { itemId } = useParams();
