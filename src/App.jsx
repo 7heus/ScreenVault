@@ -16,6 +16,7 @@ import AboutUs from "./Pages/AboutUs";
 import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
+  const [currentLang, setCurrentLang] = useState("en-US");
   const [popularPage, setPopularPage] = useState(1);
   const [topRatedPage, setTopRatedPage] = useState(1);
   const [nowPlayingPage, setNowPlayingPage] = useState(1);
@@ -26,28 +27,48 @@ function App() {
   const [upcomingList, setUpcomingList] = useState([]);
 
   useEffect(() => {
-    getPopularMovies().then((data) => setPopularList([...popularList, data]));
-    getTopRatedMovies().then((data) =>
-      setTopRatedList([...topRatedList, data])
+    getPopularMovies(currentLang, popularPage).then((data) =>
+      setPopularList(data)
     );
-    getNowPlaying().then((data) =>
-      setNowPlayingList([...nowPlayingList, data])
+    getTopRatedMovies(currentLang, topRatedPage).then((data) =>
+      setTopRatedList(data)
     );
-    getUpcoming().then((data) => setUpcomingList([...upcomingList, data]));
+    getNowPlaying(currentLang, nowPlayingPage).then((data) =>
+      setNowPlayingList(data)
+    );
+    getUpcoming(currentLang, upcomingPage).then((data) =>
+      setUpcomingList(data)
+    );
   }, []);
 
-  const updatePopular = (lang) => {
-    popularList.forEach((x) => {});
-  };
+  const updatePopPage = (int) =>
+    setPopularPage(popularPage < 1 ? 1 : popularPage + int);
+  const updateTRPage = (int) =>
+    setTopRatedPage(topRatedPage < 1 ? 1 : topRatedPage + int);
+  const updateNPPage = (int) =>
+    setNowPlayingPage(nowPlayingPage < 1 ? 1 : nowPlayingPage + int);
+  const updateUpcPage = (int) =>
+    setUpcomingPage(upcomingPage < 1 ? 1 : upcomingPage + int);
 
-  const updateTopRated = (lang, page) =>
-    getTopRatedMovies(lang, page).then((data) => setTopRatedList(data));
+  useEffect(() => {
+    if (popularList.page != popularPage)
+      getPopularMovies(currentLang, popularPage).then((data) =>
+        setPopularList(data)
+      );
+    if (topRatedList.page != topRatedPage)
+      getTopRatedMovies(currentLang, topRatedPage).then((data) =>
+        setTopRatedList(data)
+      );
+    if (nowPlayingList.page != nowPlayingPage)
+      getNowPlaying(currentLang, nowPlayingPage).then((data) =>
+        setNowPlayingList(data)
+      );
+    if (upcomingList.page != upcomingPage)
+      getUpcoming(currentLang, upcomingPage).then((data) =>
+        setUpcomingList(data)
+      );
+  }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
 
-  const updateNowPlaying = (lang, page) =>
-    getNowPlaying(lang, page).then((data) => setNowPlayingList(data));
-
-  const updateUpcoming = (lang, page) =>
-    getUpcoming(lang, page).then((data) => setUpcomingList(data));
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
