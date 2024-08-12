@@ -69,10 +69,28 @@ function App() {
       );
   }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
 
+  const pageFunctions = {
+    popular: updatePopPage,
+    topRated: updateTRPage,
+    nowPlaying: updateNPPage,
+    upcoming: updateUpcPage,
+  };
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/catalog" element={<Catalog />} />
+      <Route
+        path="/catalog"
+        element={
+          <Catalog
+            popular={popularList}
+            topRated={topRatedList}
+            nowPlaying={nowPlayingList}
+            upcoming={upcomingList}
+            pageFuncs={pageFunctions}
+          />
+        }
+      />
       <Route path="/catalog/:itemId" element={<Details />} />
       <Route path="/add" element={<Add />} />
       <Route path="/update" element={<Update />} />
