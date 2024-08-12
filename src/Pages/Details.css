@@ -1,0 +1,19 @@
+.Details {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+  text-align: center; /* Centers text horizontally */
+  text-align: justify;
+  padding: 20px;
+  max-width: 800px; /* Optional: Adjust based on your needs */
+  margin: 0 auto; /* Centers the container horizontally on the page */
+}
+.IMDpic {
+  width: 75px;
+  border-radius: 5px;
+}
+.rating {
+  font-weight: bold;
+  color: yellow;
+}

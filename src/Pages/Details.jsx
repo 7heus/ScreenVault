@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getMovieDetails } from "../../lib/TMDb";
 import Navbar from "../Components/Navbar";
+import IMDbpic from "../assets/IMDB.png";
+import "./Details.css";
 
 export default function Details() {
   const { itemId } = useParams();
@@ -33,11 +35,17 @@ export default function Details() {
           Genre: {movieDetails.genres[0].name} & {movieDetails.genres[1].name}
         </p>
         <p>Release Date: {movieDetails.release_date}</p>
-        <p>Rating: {movieDetails.vote_average}</p>
         <p>Origin Country: {movieDetails.origin_country}</p>
         <p>Original Language: {movieDetails.original_language.toUpperCase()}</p>
         <p>Runtime: {movieDetails.runtime} min</p>
         <p>Production: {movieDetails.production_companies[0].name}</p>
+        <br />
+        <br />
+        <br />
+        <a href="https://www.imdb.com/">
+          <img className="IMDpic" src={IMDbpic} />
+        </a>
+        <p className="rating">Rating: {movieDetails.vote_average}</p>
       </div>
     </>
   );
