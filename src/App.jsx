@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import {
-  getNowPlaying,
-  getPopularMovies,
-  getTopRatedMovies,
-  getUpcoming,
-} from "../lib/TMDb";
+import { getMovies } from "../lib/TMDb";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import Catalog from "./Pages/Catalog";
@@ -15,75 +10,95 @@ import Update from "./Pages/Update";
 import AboutUs from "./Pages/AboutUs";
 import NotFoundPage from "./Pages/NotFoundPage";
 
+const NUMBER_OF_ITEMS_PER_PAGE = 20;
+
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
-  const [popularPage, setPopularPage] = useState(1);
-  const [topRatedPage, setTopRatedPage] = useState(1);
-  const [nowPlayingPage, setNowPlayingPage] = useState(1);
-  const [upcomingPage, setUpcomingPage] = useState(1);
-  const [popularList, setPopularList] = useState([]);
-  const [topRatedList, setTopRatedList] = useState([]);
-  const [nowPlayingList, setNowPlayingList] = useState([]);
-  const [upcomingList, setUpcomingList] = useState([]);
 
+  /*
+---------- JOAO'S FEEDBACK ----------
+Declaring only movies state and inside it keys for each category.
+-------------------------------------
+*/
+  const [isLoading, setisLoading] = useState(true);
+  const [movies, setMovies] = useState({
+    popular: [],
+    topRated: [],
+    upcoming: [],
+    nowPlaying: [],
+  });
+  const [activeCategory, setActiveCategory] = useState("popular");
+  const [activePage, setActivePage] = useState(1);
+  const [showItems, setShowItems] = useState([]);
+
+  /*
+---------- JOAO'S FEEDBACK ----------
+If you have multiple async functions that you want to run in parallel, you can use Promise.all to run them concurrently.
+This way, you can avoid nested and/or sequential calls.
+-------------------------------------
+*/
   useEffect(() => {
-    getPopularMovies(currentLang, popularPage).then((data) =>
-      setPopularList([{ data: data }])
-    );
-    getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-      setTopRatedList([{ data: data }])
-    );
-    getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-      setNowPlayingList([{ data: data }])
-    );
-    getUpcoming(currentLang, upcomingPage).then((data) =>
-      setUpcomingList([{ data: data }])
-    );
+    if (isLoading) {
+      getMovies(activeCategory, currentLang, 1).then((data) => {
+        setMovies({ ...movies, [activeCategory]: data.results });
+        setShowItems(data.results.slice(0, NUMBER_OF_ITEMS_PER_PAGE));
+        setisLoading(false);
+      });
+    }
   }, []);
 
-  const updatePopPage = (int) => {
-    setPopularPage(popularPage < 1 ? 1 : popularPage + int);
-  };
-  const updateTRPage = (int) => {
-    setTopRatedPage(topRatedPage < 1 ? 1 : topRatedPage + int);
-  };
-  const updateNPPage = (int) => {
-    setNowPlayingPage(nowPlayingPage < 1 ? 1 : nowPlayingPage + int);
-  };
-  const updateUpcPage = (int) => {
-    setUpcomingPage(upcomingPage < 1 ? 1 : upcomingPage + int);
+  const handlePreviousPage = async () => {
+    // Check if it's the first page, otherwise just show the previous page
+    if (activePage === 1) return;
+
+    setActivePage(activePage - 1);
+    setShowItems(
+      movies[activeCategory].slice(
+        (activePage - 1) * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
+        (activePage - 1) * NUMBER_OF_ITEMS_PER_PAGE
+      )
+    );
   };
 
-  useEffect(() => {
-    if (!popularList[0] || popularList[0].data.page != popularPage)
-      getPopularMovies(currentLang, popularPage).then((data) =>
-        setPopularList([
-          ...popularList,
-          { data: data, pageFunc: updatePopPage },
-        ])
+  const handleNextPage = async () => {
+    // Check if it's necessary to fetch more movies, otherwise just show the next page
+    if (
+      movies[activeCategory].length <=
+      activePage * NUMBER_OF_ITEMS_PER_PAGE
+    ) {
+      setisLoading(true);
+
+      const data = await getMovies(activeCategory, currentLang, activePage + 1);
+
+      const newMovies = {
+        ...movies,
+        [activeCategory]: [...movies[activeCategory], ...data.results],
+      };
+
+      setMovies(newMovies);
+
+      const newShowItems = newMovies[activeCategory].slice(
+        (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
+        (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE
       );
-    if (!topRatedList[0] || topRatedList[0].data.page != topRatedPage)
-      getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-        setTopRatedList([
-          ...topRatedList,
-          { data: data, pageFunc: updateTRPage },
-        ])
+
+      setShowItems(newShowItems);
+
+      setActivePage(activePage + 1);
+
+      setisLoading(false);
+    } else {
+      setActivePage(activePage + 1);
+      setShowItems(
+        movies[activeCategory].slice(
+          activePage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
+          activePage * NUMBER_OF_ITEMS_PER_PAGE
+        )
       );
-    if (!nowPlayingList[0] || nowPlayingList[0].data.page != nowPlayingPage)
-      getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-        setNowPlayingList([
-          ...nowPlayingList,
-          { data: data, pageFunc: updateNPPage },
-        ])
-      );
-    if (!upcomingList[0] || upcomingList[0].data.page != upcomingPage)
-      getUpcoming(currentLang, upcomingPage).then((data) =>
-        setUpcomingList([
-          ...upcomingList,
-          { data: data, pageFunc: updateUpcPage },
-        ])
-      );
-  }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
+    }
+  };
+
+  if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <Routes>
@@ -92,10 +107,9 @@ function App() {
         path="/catalog"
         element={
           <Catalog
-            popular={popularList}
-            topRated={topRatedList}
-            nowPlaying={nowPlayingList}
-            upcoming={upcomingList}
+            showItems={showItems}
+            handlePreviousPage={handlePreviousPage}
+            handleNextPage={handleNextPage}
           />
         }
       />

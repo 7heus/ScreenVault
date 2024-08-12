@@ -20,6 +20,7 @@ export default function Card({ movie }) {
   };
 
   const date = convertDate(movie.release_date);
+
   return (
     <Link to={`/catalog/${movie.id}`}>
       <div className="Card">
