@@ -1,5 +1,6 @@
 import logo from "../assets/screenvault-logo.png";
 import { Link } from "react-router-dom";
+import "./HomePage.css";
 
 export default function HomePage() {
   return (
