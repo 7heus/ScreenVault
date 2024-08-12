@@ -10,13 +10,15 @@ export default function Card({ movie }) {
     };
   };
 
-  const limitedOverview = (overview) => {
-    const cutOverview = overview.split(" ");
-    if (cutOverview.length >= 15) {
-      cutOverview.splice(14, cutOverview.length);
-      const joined = cutOverview.join(" ");
-      return `${joined}...`;
-    } else return overview;
+  const getGenres = (movie) => {
+    let arr = [];
+    // movie.genres.forEach((genre) => {
+    //   arr.push(genre.name);
+    // });
+
+    // const construct = arr.join(", ");
+    // return construct;
+    console.log(movie);
   };
 
   const date = convertDate(movie.release_date);
@@ -26,16 +28,8 @@ export default function Card({ movie }) {
         <img
           src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
           alt={movie.original_title}
-          width={350}
+          width={250}
         />
-        <h2>
-          {movie.title}
-          {movie.adult && "🔞"}
-        </h2>
-        <p>
-          Released in {date.day}/{date.month}/{date.year}
-        </p>
-        <p>{limitedOverview(movie.overview)}</p>
       </div>
     </Link>
   );
