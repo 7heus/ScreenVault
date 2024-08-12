@@ -8,6 +8,8 @@
   display: flex;
   align-items: center;
   opacity: 0.7;
+  justify-content: center;
+  height: 80px;
 }
 
 .menuIcon {
@@ -24,14 +26,10 @@
   right: 30px;
 }
 
-.searchIcon {
-  background-color: #5c676a;
-  color: white;
-  margin-left: 200px;
-}
-
 input {
   width: 25%;
   border: none;
   z-index: 1;
+  height: 30px;
+  border-style: none;
 }

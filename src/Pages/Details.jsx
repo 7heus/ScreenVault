@@ -23,7 +23,7 @@ export default function Details() {
     <>
       <Navbar />
 
-      <div className="Details">
+      <div className="Details" style={{ paddingTop: 50 }}>
         <h1>{movieDetails.title}</h1>
         <img
           src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
