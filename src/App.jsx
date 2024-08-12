@@ -91,14 +91,17 @@ This way, you can avoid nested and/or sequential calls.
       setActivePage(activePage + 1);
       setShowItems(
         movies[activeCategory].slice(
-          activePage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
-          activePage * NUMBER_OF_ITEMS_PER_PAGE
+          (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE -
+            NUMBER_OF_ITEMS_PER_PAGE,
+          (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE
         )
       );
     }
   };
 
   if (isLoading) return <h1>Loading...</h1>;
+
+  console.log(activePage);
 
   return (
     <Routes>
