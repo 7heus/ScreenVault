@@ -5,8 +5,8 @@ import Card from "../Components/Card";
 
 export default function Catalog({
   showItems,
-  handlePreviousPage,
-  handleNextPage,
+
+  handlePageChange,
 }) {
   return (
     <>
@@ -20,9 +20,9 @@ export default function Catalog({
       </div>
       <div className="render">
         <div className="buttons">
-          <button onClick={handlePreviousPage}>{"<"}</button>
+          <button onClick={() => handlePageChange("previous")}>{"<"}</button>
           <p>Page: {0}</p>
-          <button onClick={handleNextPage}>{">"}</button>
+          <button onClick={() => handlePageChange("next")}>{">"}</button>
         </div>
         {showItems.map((movie, index) => {
           return <Card movie={movie} key={index} />;

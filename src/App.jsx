@@ -47,28 +47,20 @@ This way, you can avoid nested and/or sequential calls.
     }
   }, []);
 
-  const handlePreviousPage = async () => {
-    // Check if it's the first page, otherwise just show the previous page
-    if (activePage === 1) return;
+  const handlePageChange = async (direction) => {
+    const isPrevious = direction === "previous";
+    const isNext = direction === "next";
+    const newPage = isPrevious ? activePage - 1 : activePage + 1;
 
-    setActivePage(activePage - 1);
-    setShowItems(
-      movies[activeCategory].slice(
-        (activePage - 1) * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
-        (activePage - 1) * NUMBER_OF_ITEMS_PER_PAGE
-      )
-    );
-  };
+    if (isPrevious && activePage === 1) return;
 
-  const handleNextPage = async () => {
-    // Check if it's necessary to fetch more movies, otherwise just show the next page
     if (
-      movies[activeCategory].length <=
-      activePage * NUMBER_OF_ITEMS_PER_PAGE
+      isNext &&
+      movies[activeCategory].length <= activePage * NUMBER_OF_ITEMS_PER_PAGE
     ) {
       setisLoading(true);
 
-      const data = await getMovies(activeCategory, currentLang, activePage + 1);
+      const data = await getMovies(activeCategory, currentLang, newPage);
 
       const newMovies = {
         ...movies,
@@ -78,22 +70,22 @@ This way, you can avoid nested and/or sequential calls.
       setMovies(newMovies);
 
       const newShowItems = newMovies[activeCategory].slice(
-        (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
-        (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE
+        newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
+        newPage * NUMBER_OF_ITEMS_PER_PAGE
       );
 
+      console.log(newShowItems);
       setShowItems(newShowItems);
 
-      setActivePage(activePage + 1);
+      setActivePage(newPage);
 
       setisLoading(false);
     } else {
-      setActivePage(activePage + 1);
+      setActivePage(newPage);
       setShowItems(
         movies[activeCategory].slice(
-          (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE -
-            NUMBER_OF_ITEMS_PER_PAGE,
-          (activePage + 1) * NUMBER_OF_ITEMS_PER_PAGE
+          newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
+          newPage * NUMBER_OF_ITEMS_PER_PAGE
         )
       );
     }
@@ -101,19 +93,13 @@ This way, you can avoid nested and/or sequential calls.
 
   if (isLoading) return <h1>Loading...</h1>;
 
-  console.log(activePage);
-
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route
         path="/catalog"
         element={
-          <Catalog
-            showItems={showItems}
-            handlePreviousPage={handlePreviousPage}
-            handleNextPage={handleNextPage}
-          />
+          <Catalog showItems={showItems} handlePageChange={handlePageChange} />
         }
       />
       <Route path="/catalog/:itemId" element={<Details />} />
