@@ -29,6 +29,17 @@ function App() {
     getUpcoming().then((data) => setUpcomingList(data));
   }, []);
 
+  const updatePopular = (lang, page) =>
+    getPopularMovies(lang, page).then((data) => setPopularList(data));
+
+  const updateTopRated = (lang, page) =>
+    getTopRatedMovies(lang, page).then((data) => setTopRatedList(data));
+
+  const updateNowPlaying = (lang, page) =>
+    getNowPlaying(lang, page).then((data) => setNowPlayingList(data));
+
+  const updateUpcoming = (lang, page) =>
+    getUpcoming(lang, page).then((data) => setUpcomingList(data));
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
