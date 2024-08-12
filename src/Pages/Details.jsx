@@ -14,6 +14,8 @@ export default function Details() {
 
   if (!movieDetails) return <p>Loading...</p>;
 
+  console.log(movieDetails);
+
   return (
     <div className="Details">
       <h1>{movieDetails.title}</h1>
@@ -23,8 +25,18 @@ export default function Details() {
         width={500}
       />
       <p>{movieDetails.overview}</p>
+      <p>
+        Genre: {movieDetails.genres[0].name} & {movieDetails.genres[1].name}
+      </p>
       <p>Release Date: {movieDetails.release_date}</p>
       <p>Rating: {movieDetails.vote_average}</p>
+      <p>Origin Country: {movieDetails.origin_country}</p>
+      <p>Original Language: {movieDetails.original_language.toUpperCase()}</p>
+      <p>Runtime: {movieDetails.runtime} min</p>
+      <p>
+        Production: {movieDetails.production_companies[0].name} &{" "}
+        {movieDetails.production_companies[1].name}
+      </p>
     </div>
   );
 }
