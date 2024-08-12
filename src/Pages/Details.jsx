@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getMovieDetails } from "../../lib/TMDb";
-import Navbar from "../Components/Navbar";
-import IMDbpic from "../assets/IMDB.png";
 import "./Details.css";
+import IMDbpic from "../assets/IMDb.png";
 
 export default function Details() {
   const { itemId } = useParams();
