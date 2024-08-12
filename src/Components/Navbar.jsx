@@ -26,7 +26,9 @@ export default function Navbar() {
         onChange={updateQuery}
         onKeyDown={sender}
       />
-      <img src={textLogo} alt="logo-text" className="textLogo" />
+      <Link to="/">
+        <img src={textLogo} alt="logo-text" className="textLogo" />
+      </Link>
     </nav>
   );
 }
