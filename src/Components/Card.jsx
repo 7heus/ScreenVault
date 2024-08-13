@@ -11,17 +11,6 @@ export default function Card({ movie }) {
     };
   };
 
-  const getGenres = (movie) => {
-    let arr = [];
-    // movie.genres.forEach((genre) => {
-    //   arr.push(genre.name);
-    // });
-
-    // const construct = arr.join(", ");
-    // return construct;
-    console.log(movie);
-  };
-
   const date = convertDate(movie.release_date);
   return (
     <Link to={`/catalog/${movie.id}`}>
