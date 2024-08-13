@@ -32,10 +32,7 @@ function App() {
   const [topRatedPage, setTopRatedPage] = useState(1);
   const [nowPlayingPage, setNowPlayingPage] = useState(1);
   const [upcomingPage, setUpcomingPage] = useState(1);
-  const [popularList, setPopularList] = useState([]);
-  const [topRatedList, setTopRatedList] = useState([]);
-  const [nowPlayingList, setNowPlayingList] = useState([]);
-  const [upcomingList, setUpcomingList] = useState([]);
+
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   useEffect(() => {
