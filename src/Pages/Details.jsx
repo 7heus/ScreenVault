@@ -31,6 +31,7 @@ export default function Details() {
           width={500}
         />
         <p>{movieDetails.overview}</p>
+        <br/>
         <p>
           Genre: {movieDetails.genres[0].name} & {movieDetails.genres[1].name}
         </p>
