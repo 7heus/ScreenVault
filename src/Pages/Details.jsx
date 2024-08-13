@@ -42,7 +42,7 @@ export default function Details() {
           alt={movieDetails.original_title}
           width={500}
         />
-        <p>{movieDetails.overview}</p>
+        <p><h3>{movieDetails.overview}</h3></p>
         <br />
         <p>
           Genre: {movieDetails.genres[0].name} & {movieDetails.genres[1].name}

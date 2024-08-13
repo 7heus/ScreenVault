@@ -1,6 +1,6 @@
 .sidebar {
   position: fixed;
-  width: 300px;
+  width: 15vw;
   background-color: #5c676a;
   height: calc(100% - 80px);
   top: 80px;
@@ -8,4 +8,16 @@
   right: 100%;
   z-index: 900;
   overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 70vw;
+  }
 }

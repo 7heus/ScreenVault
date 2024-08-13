@@ -1,5 +1,6 @@
 body {
-  background: radial-gradient(circle, #5c676a, rgba(255, 0, 255, 0));
+  background: radial-gradient(circle, #a0a0a0, #6b6b6b);
+  /* first (255, 0, 255, 0), second (92, 103, 106, 0) */
   color: white;
 }
 
