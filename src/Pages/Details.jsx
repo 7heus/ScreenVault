@@ -28,8 +28,6 @@ export default function Details() {
 
   return (
     <>
-      <Navbar />
-
       <div className="Details" style={{ paddingTop: 50 }}>
         <ReactPlayer
           url={trailer}
