@@ -11,6 +11,14 @@ import {
   checkIfExists,
   postFavorite,
   getList,
+  getFavorites,
+  deleteFavorite,
+  getWatchLater,
+  getWatched,
+  postWatched,
+  deleteWatched,
+  postWatchLater,
+  deleteWatchLater,
 } from "../../lib/Local";
 
 export default function Details() {
@@ -19,6 +27,10 @@ export default function Details() {
   const [trailer, setTrailer] = useState(null);
   const [lists, setLists] = useState([]);
   const [selectedList, setSelectedList] = useState("");
+  const [inFavorite, setInFavorite] = useState(false);
+  const [listsContaining, setListsContaining] = useState([]);
+  const [isInWatchLater, setIsInWatchLater] = useState(false);
+  const [isWatched, setIsWatched] = useState(false);
 
   useEffect(() => {
     getMovieDetails(itemId).then((data) => {
@@ -41,27 +53,101 @@ export default function Details() {
     });
   }, [movieDetails]);
 
-  const handleSelect = (e) => setSelectedList(e.target.value);
+  useEffect(() => {
+    getFavorites().then((data) => {
+      data.forEach((li) => {
+        if (String.toString(li.movieId) === String.toString(itemId))
+          setInFavorite(true);
+      });
+    });
+    getLists().then((data) => {
+      data.forEach((li) => {
+        if (li.data.includes(`${itemId}`))
+          setListsContaining([...listsContaining, li.id]);
+      });
+    });
+    getWatchLater().then((data) => {
+      data.forEach((li) => {
+        if (String.toString(li.movieId) === String.toString(itemId))
+          setIsInWatchLater(true);
+      });
+    });
+    getWatched().then((data) => {
+      data.forEach((li) => {
+        if (String.toString(li.movieId) === String.toString(itemId))
+          setIsWatched(true);
+      });
+    });
+  }, [trailer]);
+
+  const handleSelect = (e) => {
+    console.log(e.target.value);
+    setSelectedList(e.target.value);
+  };
 
   const addToFavorite = () => {
     checkIfExists("favorites", itemId).then((value) => {
       if (value === true) return;
       postFavorite(`${itemId}`);
-      console.log("added");
+      setInFavorite(true);
+    });
+  };
+
+  const removeFavorite = () => {
+    getFavorites().then((data) => {
+      const toDelete = data.filter((x) => x.movieId === `${itemId}`)[0];
+      deleteFavorite(toDelete.id).then(() => console.log("deleted"));
+      setInFavorite(false);
     });
   };
 
   const addToList = () => {
+    if (!selectedList) return;
     checkIfExists("inList", itemId, selectedList).then((value) => {
       if (value === true) return;
       getList(selectedList).then((li) => {
-        console.log(li.data);
-        // const format = {
-        //   name: li.name,
-        //   data: [...li.data, `${itemId}`],
-        // };
-        // updateList(selectedList, format);
+        if (li.data.includes(itemId)) return;
+        const format = {
+          name: li.name,
+          data: [...li.data, `${itemId}`],
+        };
+        updateList(selectedList, format).then(() =>
+          setListsContaining([...listsContaining, `${li.id}`])
+        );
       });
+    });
+  };
+
+  const addToWatched = () => {
+    postWatched(itemId).then(() => setIsWatched(true));
+  };
+  const removeWatched = () => {
+    getWatched().then((data) => {
+      const toDelete = data.filter((x) => x.movieId === `${itemId}`)[0];
+      deleteWatched(toDelete.id).then(() => setIsWatched(false));
+    });
+  };
+
+  const addToWatchLater = () =>
+    postWatchLater(itemId).then(() => setIsInWatchLater(true));
+
+  const removeWatchLater = () => {
+    getWatchLater().then((data) => {
+      const toDelete = data.filter((x) => x.movieId === `${itemId}`)[0];
+      deleteWatchLater(toDelete.id).then(() => setIsInWatchLater(false));
+    });
+  };
+
+  const removeFromList = () => {
+    getList(selectedList).then((dat) => {
+      const filtered = dat.data.filter((x) => x != `${itemId}`);
+      const format = {
+        name: dat.name,
+        data: filtered,
+      };
+      updateList(selectedList, format).then(() =>
+        setListsContaining(listsContaining.filter((x) => x != dat.id))
+      );
     });
   };
 
@@ -84,21 +170,43 @@ export default function Details() {
           width={500}
         />
         <div className="buttons">
-          <button onClick={addToFavorite}>Add to Favorites</button>
-          <button>Add to Watched</button>
+          <button onClick={!inFavorite ? addToFavorite : removeFavorite}>
+            {inFavorite ? "Remove Favorite" : "Add to Favorite"}
+          </button>
+          <button onClick={!isWatched ? addToWatched : removeWatched}>
+            {!isWatched ? "I watched this" : "Not watched"}
+          </button>
+          <button
+            onClick={!isInWatchLater ? addToWatchLater : removeWatchLater}
+          >
+            {!isInWatchLater ? "Watch Later" : "Remove from 'Watch Later'"}
+          </button>
           <select
             id="lists"
             name="lists"
             value={selectedList}
-            onChange={() => handleSelect}
+            onChange={handleSelect}
           >
+            <option value="" disabled hidden>
+              ...
+            </option>
             {lists.map((list, index) => (
               <option key={index} value={list.id}>
                 {list.name}
               </option>
             ))}
           </select>
-          <button onClick={addToList}>Add to List</button>
+          <button
+            onClick={
+              !listsContaining.includes(selectedList)
+                ? addToList
+                : removeFromList
+            }
+          >
+            {listsContaining.includes(selectedList)
+              ? "Remove from List"
+              : "Add to List"}
+          </button>
         </div>
         <h3>{movieDetails.overview}</h3>
         <br />
