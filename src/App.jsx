@@ -17,6 +17,7 @@ import NotFoundPage from "./Pages/NotFoundPage";
 import Navbar from "./Components/Navbar";
 import SearchResults from "./Pages/SearchResults";
 import Footer from "./Components/Footer";
+import Sidebar from "./Components/Sidebar";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
@@ -28,6 +29,7 @@ function App() {
   const [topRatedList, setTopRatedList] = useState([]);
   const [nowPlayingList, setNowPlayingList] = useState([]);
   const [upcomingList, setUpcomingList] = useState([]);
+  const [sidebarActive, setSidebarActive] = useState(false);
 
   useEffect(() => {
     getPopularMovies(currentLang, popularPage).then((data) =>
@@ -43,6 +45,8 @@ function App() {
       setUpcomingList([{ data: data }])
     );
   }, []);
+
+  const setSidebar = () => setSidebarActive(!sidebarActive);
 
   const updatePopPage = (int) => {
     setPopularPage(popularPage < 1 ? 1 : popularPage + int);
@@ -97,7 +101,8 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar callback={setSidebar} />
+      <Sidebar boolean={sidebarActive} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

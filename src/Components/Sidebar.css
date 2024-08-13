@@ -1,0 +1,23 @@
+.sidebar {
+  position: fixed;
+  width: 25vw;
+  max-width: 300px;
+  max-height: 91.7vh;
+  background-color: #5c676a;
+  height: 100vh;
+  bottom: 0;
+  transition: right 1s;
+  right: 100%;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 70vw;
+  }
+}
