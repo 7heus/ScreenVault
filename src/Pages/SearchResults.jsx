@@ -11,18 +11,18 @@ export default function SearchResults() {
   const [resultMovie, setResultMovie] = useState([]);
   const [resultTV, setResultTV] = useState([]);
 
-  useEffect(() => {
-    if (resultMovie.length === 0) {
-      searchForMovie(query, "en-US", 1, false).then((data) => {
-        setResultMovie([{ data: data }]);
-      });
-    }
-    if (resultTV.length === 0) {
-      searchForTV(query, "en-US", 1, false).then((data) => {
-        setResultTV([{ data: data }]);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (resultMovie.length === 0) {
+  //     searchForMovie(query, "en-US", 1, false).then((data) => {
+  //       setResultMovie([{ data: data }]);
+  //     });
+  //   }
+  //   if (resultTV.length === 0) {
+  //     searchForTV(query, "en-US", 1, false).then((data) => {
+  //       setResultTV([{ data: data }]);
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     setQuery(searchParams.get("q").replace("_", " "));
