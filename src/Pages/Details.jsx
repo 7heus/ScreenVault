@@ -4,26 +4,34 @@ import { getMovieDetails, fetchVideos } from "../../lib/TMDb";
 import "./Details.css";
 import IMDbpic from "../assets/IMDb.png";
 import Navbar from "../Components/Navbar";
+import ReactPlayer from "react-player";
 
 export default function Details() {
   const { itemId } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+  const [trailer, setTrailer] = useState(null);
 
   useEffect(() => {
     getMovieDetails(itemId).then((data) => {
       setMovieDetails(data);
     });
   }, [itemId]);
+  useEffect(() => {
+    fetchVideos(itemId).then((data) => {
+      const vid = data.results.filter((video) => video.type === "Trailer")[0];
+      setTrailer(`https://www.youtube.com/watch?v=${vid.key}`);
+      console.log(trailer);
+    });
+  }, [movieDetails]);
 
   if (!movieDetails) return <p>Loading...</p>;
-
-  console.log(movieDetails);
 
   return (
     <>
       <Navbar />
 
       <div className="Details" style={{ paddingTop: 50 }}>
+        <ReactPlayer url={trailer} playing={true} />
         <h1>{movieDetails.title}</h1>
         <img
           src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
