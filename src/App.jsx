@@ -60,7 +60,7 @@ function App() {
   return (
     <>
       <Navbar callback={setSidebar} />
-      <Sidebar boolean={sidebarActive} />
+      <Sidebar boolean={!loading && sidebarActive} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route

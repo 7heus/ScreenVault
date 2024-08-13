@@ -15,7 +15,6 @@ export default function Navbar({ callback }) {
     if (e.key === "Enter") {
       nav(`/search?q=${query.replace(" ", "_")}`, { replace: true });
       setQuery("");
-      location.reload();
     }
   };
 

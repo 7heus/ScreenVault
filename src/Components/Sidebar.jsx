@@ -28,7 +28,7 @@ export default function Sidebar({ boolean }) {
     },
   ];
 
-  if (!boolean) boolean = false;
+  useEffect(() => {}, [boolean]);
 
   return (
     <div className="sidebar" style={{ right: boolean ? "85%" : "100%" }}>

@@ -35,7 +35,6 @@ export default function RandomMovie({
       setLoading(false);
     }, 2000); // Adjust the delay as needed
   };
-  console.log(randomMovieData);
 
   return (
     <div className="random-movie-page">
