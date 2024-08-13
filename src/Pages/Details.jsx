@@ -31,7 +31,13 @@ export default function Details() {
       <Navbar />
 
       <div className="Details" style={{ paddingTop: 50 }}>
-        <ReactPlayer url={trailer} playing={true} />
+        <ReactPlayer
+          url={trailer}
+          playing={true}
+          style={{ paddingTop: 50, marginBottom: 50 }}
+          width={800}
+          muted={true}
+        />
         <h1>{movieDetails.title}</h1>
         <img
           src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
@@ -39,7 +45,7 @@ export default function Details() {
           width={500}
         />
         <p>{movieDetails.overview}</p>
-        <br/>
+        <br />
         <p>
           Genre: {movieDetails.genres[0].name} & {movieDetails.genres[1].name}
         </p>
