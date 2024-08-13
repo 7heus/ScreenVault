@@ -21,13 +21,22 @@
 .textLogo {
   width: 250px;
   padding-right: 20px;
+  margin-top: 12.5px;
 }
 input {
-  width: 25%;
+  width: 20%;
   border: none;
   height: 30px;
   outline: none;
   z-index: 1;
   border-radius: 2.5px;
   text-align: center;
+  padding: 0%;
+}
+
+input::placeholder{
+  text-align: center;
+  align-items: center;
+  font-weight: bold;
+  color: black;
 }
