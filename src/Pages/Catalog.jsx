@@ -21,13 +21,13 @@ export default function Catalog({ popular, topRated, nowPlaying, upcoming }) {
     <>
       <div className="page">
         {popularPage && <MovieWrap h4={"Popular Now"} dat={popularPage} />}
-
+        <br/><br/>
         {topRatedPage && <MovieWrap h4={"Top Rated"} dat={topRatedPage} />}
-
+        <br/><br/>
         {nowPlayingPage && (
           <MovieWrap h4={"On Theaters"} dat={nowPlayingPage} />
         )}
-
+        <br/><br/>
         {upcomingPage && <MovieWrap h4={"Upcoming"} dat={upcomingPage} />}
       </div>
     </>

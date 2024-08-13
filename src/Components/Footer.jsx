@@ -3,14 +3,14 @@ import "./Footer.css";
 
 export default function Footer() {
   return (
-    <footer className="">
+    <footer className="Footer">
       <a
-        className=""
+        className="GitHubRepo"
         href="https://github.com/7heus/ScreenVault"
-        img
+        img={""}
         src={textLogo}
         alt="text-logo"
-      ></a>
+      >GitHub</a>
     </footer>
   );
 }
