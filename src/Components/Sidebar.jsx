@@ -17,6 +17,10 @@ export default function Sidebar({ boolean }) {
       name: "Catalog",
       to: "/catalog",
     },
+    {
+      name: "Random",
+      to: "/random",
+    },
 
     {
       name: "About Us",

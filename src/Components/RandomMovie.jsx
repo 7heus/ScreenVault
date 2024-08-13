@@ -34,10 +34,11 @@ export default function RandomMovie({
       setLoading(false);
     }, 2000); // Adjust the delay as needed
   };
+  console.log(randomMovieData);
 
   return (
     <div className="random-movie-page">
-      <h1>Random Movie Selector</h1>
+      <h1>Don't know what to watch?</h1>
       <button onClick={randomizeMovie}>Pick a Random Movie</button>
       {loading && (
         <div className="movie-wheel">
@@ -57,12 +58,13 @@ export default function RandomMovie({
           </div>
         </div>
       )}
-
       {randomMovieData && !loading && (
         <div>
           {/* Display random movie details here */}
           <h2>{randomMovieData.data.results[0].title}</h2>
-          <img src={randomMovieData.data.results[0].image} />
+          <img
+            src={`https://image.tmdb.org/t/p/w500/${randomMovieData.data.results[0].poster_path}`}
+          />
         </div>
       )}
     </div>
