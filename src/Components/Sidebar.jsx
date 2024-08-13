@@ -1,8 +1,25 @@
 import "./Sidebar.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ boolean }) {
+  
+  
+  const [isVisible, setIsVisible] = useState(boolean);
+
+  useEffect(() => {
+    setIsVisible(boolean);
+  }, [boolean]);
+
+  const handleMouseEnter = () => {
+    setIsVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsVisible(false);
+  };
+
+
   const items = [
     {
       name: "Home",
@@ -31,7 +48,12 @@ export default function Sidebar({ boolean }) {
   useEffect(() => {}, [boolean]);
 
   return (
-    <div className="sidebar" style={{ right: boolean ? "85%" : "100%" }}>
+    <div
+      className="sidebar"
+      style={{ right: isVisible ? "85%" : "100%" }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {items.map((x, index) => (
         <Link key={index} to={x.to} className="links">
           <p>{x.name}</p>
@@ -40,3 +62,6 @@ export default function Sidebar({ boolean }) {
     </div>
   );
 }
+
+
+

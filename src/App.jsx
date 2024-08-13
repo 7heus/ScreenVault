@@ -28,6 +28,15 @@ function App() {
   const [upcomingList, setUpcomingList] = useState(null);
   const [sidebarActive, setSidebarActive] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [popularPage, setPopularPage] = useState(1);
+  const [topRatedPage, setTopRatedPage] = useState(1);
+  const [nowPlayingPage, setNowPlayingPage] = useState(1);
+  const [upcomingPage, setUpcomingPage] = useState(1);
+  const [popularList, setPopularList] = useState([]);
+  const [topRatedList, setTopRatedList] = useState([]);
+  const [nowPlayingList, setNowPlayingList] = useState([]);
+  const [upcomingList, setUpcomingList] = useState([]);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,16 +60,21 @@ function App() {
     fetchData();
   }, [currentLang]);
 
-  const setSidebar = () => setSidebarActive(!sidebarActive);
-
   if (loading) {
     return <div>Loading...</div>; // Global loading indicator
   }
 
+
+  const handleMenuIconHover = () => setSidebarVisible(true);
+  const handleMenuIconLeave = () => setSidebarVisible(false);
+
   return (
     <>
-      <Navbar callback={setSidebar} />
-      <Sidebar boolean={!loading && sidebarActive} />
+      <Navbar
+      onMenuIconHover={handleMenuIconHover}
+      onMenuIconLeave={handleMenuIconLeave}
+      /> 
+      <Sidebar boolean={sidebarVisible} /> 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
