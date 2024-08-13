@@ -7,7 +7,7 @@ export default function Footer() {
       <a
         className=""
         href="https://github.com/7heus/ScreenVault"
-        img
+        img={""}
         src={textLogo}
         alt="text-logo"
       ></a>
