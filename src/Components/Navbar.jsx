@@ -30,6 +30,7 @@ export default function Navbar({ callback }) {
         value={query}
         onChange={updateQuery}
         onKeyDown={sender}
+        placeholder="Search for movies"
       />
       <Link to="/">
         <img src={textLogo} alt="logo-text" className="textLogo" />
