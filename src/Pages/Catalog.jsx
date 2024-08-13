@@ -3,11 +3,7 @@ import "./Catalog.css";
 import { Link } from "react-router-dom";
 import Card from "../Components/Card";
 
-export default function Catalog({
-  showItems,
-
-  handlePageChange,
-}) {
+export default function Catalog({ showItems, page, handlePageChange }) {
   return (
     <>
       <div className="buttons">
@@ -21,7 +17,7 @@ export default function Catalog({
       <div className="render">
         <div className="buttons">
           <button onClick={() => handlePageChange("previous")}>{"<"}</button>
-          <p>Page: {0}</p>
+          <p>Page: {page}</p>
           <button onClick={() => handlePageChange("next")}>{">"}</button>
         </div>
         {showItems.map((movie, index) => {

@@ -47,48 +47,69 @@ This way, you can avoid nested and/or sequential calls.
     }
   }, []);
 
+  /*
+---------- JOAO'S FEEDBACK ----------
+This function works for both previous and next page changes.
+It will only request more moveis from the api if you have no state to show.
+Now what you need to imnplement is the:
+- Error handling
+- Active Category change (probably it will be better to do so in another function
+-------------------------------------
+*/
   const handlePageChange = async (direction) => {
     const isPrevious = direction === "previous";
     const isNext = direction === "next";
+    // Calculate the new page
     const newPage = isPrevious ? activePage - 1 : activePage + 1;
 
+    // Safeguard to prevent going lower than page 1
     if (isPrevious && activePage === 1) return;
 
+    // Find the start and end index of the new page
+    const startIndex =
+      newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE;
+    const endIndex = newPage * NUMBER_OF_ITEMS_PER_PAGE;
+    // Get the current movies for the active category
+    const currentMovies = movies[activeCategory];
+
+    // If the next page is requested and the current movies array is smaller than the end index of the new page then fetch new movies
     if (
       isNext &&
       movies[activeCategory].length <= activePage * NUMBER_OF_ITEMS_PER_PAGE
     ) {
       setisLoading(true);
 
-      const data = await getMovies(activeCategory, currentLang, newPage);
+      // Try to fetch new movies
+      try {
+        const data = await getMovies(activeCategory, currentLang, newPage);
 
-      const newMovies = {
-        ...movies,
-        [activeCategory]: [...movies[activeCategory], ...data.results],
-      };
+        const newMovies = {
+          ...movies,
+          [activeCategory]: [...currentMovies, ...data.results],
+        };
 
-      setMovies(newMovies);
+        setMovies(newMovies);
 
-      const newShowItems = newMovies[activeCategory].slice(
-        newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
-        newPage * NUMBER_OF_ITEMS_PER_PAGE
-      );
+        const newShowItems = newMovies[activeCategory].slice(
+          startIndex,
+          endIndex
+        );
 
-      console.log(newShowItems);
-      setShowItems(newShowItems);
-
-      setActivePage(newPage);
-
-      setisLoading(false);
+        setShowItems(newShowItems);
+      } catch (error) {
+        /*
+          TODO: Error handling 
+        */
+      } finally {
+        // Set loading to false, regardless of the outcome of the fetch
+        setisLoading(false);
+      }
     } else {
-      setActivePage(newPage);
-      setShowItems(
-        movies[activeCategory].slice(
-          newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE,
-          newPage * NUMBER_OF_ITEMS_PER_PAGE
-        )
-      );
+      setShowItems(movies[activeCategory].slice(startIndex, endIndex));
     }
+
+    // Set the active page
+    setActivePage(newPage);
   };
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -99,7 +120,11 @@ This way, you can avoid nested and/or sequential calls.
       <Route
         path="/catalog"
         element={
-          <Catalog showItems={showItems} handlePageChange={handlePageChange} />
+          <Catalog
+            showItems={showItems}
+            page={activePage}
+            handlePageChange={handlePageChange}
+          />
         }
       />
       <Route path="/catalog/:itemId" element={<Details />} />
