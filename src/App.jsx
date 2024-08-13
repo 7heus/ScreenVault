@@ -18,6 +18,7 @@ import Navbar from "./Components/Navbar";
 import SearchResults from "./Pages/SearchResults";
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
+import RandomMovie from "./Components/RandomMovie";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
@@ -120,6 +121,18 @@ function App() {
         <Route path="/add" element={<Add />} />
         <Route path="/update" element={<Update />} />
         <Route path="/search" element={<SearchResults />} />
+
+        <Route
+          path="/random"
+          element={
+            <RandomMovie
+              popular={popularList}
+              topRated={topRatedList}
+              nowPlaying={nowPlayingList}
+              upcoming={upcomingList}
+            />
+          }
+        />
 
         <Route path="/about" element={<AboutUs />} />
 

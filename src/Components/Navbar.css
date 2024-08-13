@@ -34,7 +34,7 @@ input {
   padding: 0%;
 }
 
-input::placeholder{
+input::placeholder {
   text-align: center;
   align-items: center;
   font-weight: bold;

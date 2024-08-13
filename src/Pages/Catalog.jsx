@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./Catalog.css";
 import Card from "../Components/Card";
 import { Link } from "react-router-dom";
-import Navbar from "../Components/Navbar";
 import MovieWrap from "./MovieWrapper";
 
 export default function Catalog({ popular, topRated, nowPlaying, upcoming }) {
