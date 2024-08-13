@@ -20,6 +20,8 @@ import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import RandomMovie from "./Components/RandomMovie";
 
+const NUMBER_PER_PAGE = 20;
+
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
   const [popularList, setPopularList] = useState(null);
@@ -28,33 +30,62 @@ function App() {
   const [upcomingList, setUpcomingList] = useState(null);
   const [sidebarActive, setSidebarActive] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [currentPagePopular, setCurrentPagePopular] = useState(1);
+  const [currentPageTopRated, setCurrentPageTopRated] = useState(1);
+  const [currentPageNowPlaying, setCurrentPageNowPlaying] = useState(1);
+  const [currentPageUpcoming, setCurrentPageUpcoming] = useState(1);
+
+  const fetchData = async () => {
+    try {
+      const popularData = await getPopularMovies(
+        currentLang,
+        currentPagePopular
+      );
+      const topRatedData = await getTopRatedMovies(
+        currentLang,
+        currentPageTopRated
+      );
+      const nowPlayingData = await getNowPlaying(
+        currentLang,
+        currentPageNowPlaying
+      );
+      const upcomingData = await getUpcoming(currentLang, currentPageUpcoming);
+
+      setPopularList([{ data: popularData }]);
+      setTopRatedList([{ data: topRatedData }]);
+      setNowPlayingList([{ data: nowPlayingData }]);
+      setUpcomingList([{ data: upcomingData }]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const popularData = await getPopularMovies(currentLang, 1);
-        const topRatedData = await getTopRatedMovies(currentLang, 1);
-        const nowPlayingData = await getNowPlaying(currentLang, 1);
-        const upcomingData = await getUpcoming(currentLang, 1);
-
-        setPopularList([{ data: popularData }]);
-        setTopRatedList([{ data: topRatedData }]);
-        setNowPlayingList([{ data: nowPlayingData }]);
-        setUpcomingList([{ data: upcomingData }]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [currentLang]);
+  }, [
+    currentLang,
+    currentPagePopular,
+    currentPageTopRated,
+    currentPageNowPlaying,
+    currentPageUpcoming,
+  ]);
 
   const setSidebar = () => setSidebarActive(!sidebarActive);
 
+  const handlePrevPage = (setCurrentPage, currentPage) => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = (setCurrentPage, currentPage) => {
+    setCurrentPage(currentPage + 1);
+  };
+
   if (loading) {
-    return <div>Loading...</div>; // Global loading indicator
+    return <div>Loading...</div>;
   }
 
   return (
@@ -67,10 +98,21 @@ function App() {
           path="/catalog"
           element={
             <Catalog
-              popular={popularList}
-              topRated={topRatedList}
-              nowPlaying={nowPlayingList}
-              upcoming={upcomingList}
+              popular={popularList && popularList}
+              topRated={topRatedList && topRatedList}
+              nowPlaying={nowPlayingList && nowPlayingList}
+              upcoming={upcomingList && upcomingList}
+              currentPagePopular={currentPagePopular}
+              currentPageNowPlaying={currentPageNowPlaying}
+              currentPageTopRated={currentPageTopRated}
+              currentPageUpcoming={currentPageUpcoming}
+              setCurrentPageNowPlaying={setCurrentPageNowPlaying}
+              setCurrentPagePopular={setCurrentPagePopular}
+              setCurrentPageTopRated={setCurrentPageTopRated}
+              setCurrentPageUpcoming={setCurrentPageUpcoming}
+              handleNextPage={handleNextPage}
+              handlePrevPage={handlePrevPage}
+              fetch={fetchData}
             />
           }
         />
