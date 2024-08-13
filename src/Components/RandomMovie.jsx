@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./RandomMovie.css";
-import { Link } from "react-router-dom";
+import Card from "./Card";
+import "./RandomMovie.css"; // Import the CSS file
 
 export default function RandomMovie({
   popular,
@@ -34,7 +34,6 @@ export default function RandomMovie({
       setLoading(false);
     }, 2000);
   };
-  console.log(randomMovieData);
 
   return (
     <div className="random-movie-page">
@@ -62,9 +61,7 @@ export default function RandomMovie({
         <div>
           {/* Display random movie details here */}
           <h2>{randomMovieData.data.results[0].title}</h2>
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${randomMovieData.data.results[0].poster_path}`}
-          />
+          <Card movie={randomMovieData.data.results[0]} />
         </div>
       )}
     </div>

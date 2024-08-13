@@ -1,7 +1,6 @@
 import Card from "../Components/Card";
 
 export default function MovieWrap({ h4, dat }) {
-  console.log(dat);
   return (
     <div className="movie-wrap">
       <h4>{h4}</h4>

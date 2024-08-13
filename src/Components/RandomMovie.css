@@ -19,8 +19,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  transform: rotate(0deg);
-  animation: spin 2s linear infinite;
+  transform: rotate(0deg); /* Start with no rotation */
+  animation: spin 2s linear infinite; /* Continuous spinning */
 }
 
 .movie-wheel-item {
