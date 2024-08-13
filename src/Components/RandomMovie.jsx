@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Card from "./Card";
 import "./RandomMovie.css"; // Import the CSS file
 
 export default function RandomMovie({
@@ -62,9 +63,7 @@ export default function RandomMovie({
         <div>
           {/* Display random movie details here */}
           <h2>{randomMovieData.data.results[0].title}</h2>
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${randomMovieData.data.results[0].poster_path}`}
-          />
+          <Card movie={randomMovieData.data.results[0]} />
         </div>
       )}
     </div>
