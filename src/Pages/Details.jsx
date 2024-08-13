@@ -21,8 +21,6 @@ export default function Details() {
 
   return (
     <>
-      <Navbar />
-
       <div className="Details" style={{ paddingTop: 50 }}>
         <h1>{movieDetails.title}</h1>
         <img

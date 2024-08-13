@@ -20,8 +20,6 @@ export default function Catalog({ popular, topRated, nowPlaying, upcoming }) {
 
   return (
     <>
-      <Navbar />
-
       <div className="page">
         {popularPage && <MovieWrap h4={"Popular Now"} dat={popularPage} />}
 

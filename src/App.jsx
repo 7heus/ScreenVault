@@ -16,6 +16,7 @@ import AboutUs from "./Pages/AboutUs";
 import NotFoundPage from "./Pages/NotFoundPage";
 import Navbar from "./Components/Navbar";
 import SearchResults from "./Pages/SearchResults";
+import Footer from "./Components/Footer";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
@@ -95,28 +96,32 @@ function App() {
   }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route
-        path="/catalog"
-        element={
-          <Catalog
-            popular={popularList}
-            topRated={topRatedList}
-            nowPlaying={nowPlayingList}
-            upcoming={upcomingList}
-          />
-        }
-      />
-      <Route path="/catalog/:itemId" element={<Details />} />
-      <Route path="/add" element={<Add />} />
-      <Route path="/update" element={<Update />} />
-      <Route path="/search" element={<SearchResults />} />
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/catalog"
+          element={
+            <Catalog
+              popular={popularList}
+              topRated={topRatedList}
+              nowPlaying={nowPlayingList}
+              upcoming={upcomingList}
+            />
+          }
+        />
+        <Route path="/catalog/:itemId" element={<Details />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/update" element={<Update />} />
+        <Route path="/search" element={<SearchResults />} />
 
-      <Route path="/about" element={<AboutUs />} />
+        <Route path="/about" element={<AboutUs />} />
 
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
