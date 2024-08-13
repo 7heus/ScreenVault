@@ -1,0 +1,9 @@
+.sidebar {
+  position: fixed;
+  width: 300px;
+  background-color: #5c676a;
+  height: 100%;
+  top: 8.5%;
+  transition: right 1s;
+  right: 100%;
+}

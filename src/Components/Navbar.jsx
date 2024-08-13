@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({ callback }) {
   const [query, setQuery] = useState("");
   const nav = useNavigate();
 
@@ -19,7 +19,12 @@ export default function Navbar() {
 
   return (
     <nav className="Navbar">
-      <img src={menuIcon} alt="menu-icon" className="menuIcon" />
+      <img
+        src={menuIcon}
+        alt="menu-icon"
+        className="menuIcon"
+        onClick={callback}
+      />
       <input
         type="search"
         value={query}
