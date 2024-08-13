@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./RandomMovie.css"; // Import the CSS file
+import "./RandomMovie.css";
+import { Link } from "react-router-dom";
 
 export default function RandomMovie({
   popular,
@@ -23,7 +24,6 @@ export default function RandomMovie({
     const randomIndex = Math.floor(Math.random() * allMovies.length);
     const randomMovie = allMovies[randomIndex];
 
-    // Simulate loading time with a timeout
     setTimeout(() => {
       const randomMovieData = {
         data: {
@@ -32,7 +32,7 @@ export default function RandomMovie({
       };
       setRandomMovieData(randomMovieData);
       setLoading(false);
-    }, 2000); // Adjust the delay as needed
+    }, 2000);
   };
   console.log(randomMovieData);
 
