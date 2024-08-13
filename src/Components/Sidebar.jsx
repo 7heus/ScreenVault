@@ -27,6 +27,9 @@ export default function Sidebar({ boolean }) {
       to: "/about",
     },
   ];
+
+  if (!boolean) boolean = false;
+
   return (
     <div className="sidebar" style={{ right: boolean ? "85%" : "100%" }}>
       {items.map((x, index) => (
