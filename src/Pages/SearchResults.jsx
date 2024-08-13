@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { searchForMovie, searchForTV } from "../../lib/TMDb";
 import { useEffect, useState } from "react";
-import Card from "../Components/Card";
 import Navbar from "../Components/Navbar";
 import MovieWrap from "./MovieWrapper";
 

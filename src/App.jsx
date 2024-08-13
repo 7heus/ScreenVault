@@ -22,83 +22,40 @@ import RandomMovie from "./Components/RandomMovie";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
-  const [popularPage, setPopularPage] = useState(1);
-  const [topRatedPage, setTopRatedPage] = useState(1);
-  const [nowPlayingPage, setNowPlayingPage] = useState(1);
-  const [upcomingPage, setUpcomingPage] = useState(1);
-  const [popularList, setPopularList] = useState([]);
-  const [topRatedList, setTopRatedList] = useState([]);
-  const [nowPlayingList, setNowPlayingList] = useState([]);
-  const [upcomingList, setUpcomingList] = useState([]);
+  const [popularList, setPopularList] = useState(null);
+  const [topRatedList, setTopRatedList] = useState(null);
+  const [nowPlayingList, setNowPlayingList] = useState(null);
+  const [upcomingList, setUpcomingList] = useState(null);
   const [sidebarActive, setSidebarActive] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getPopularMovies(currentLang, popularPage).then((data) =>
-      setPopularList([{ data: data }])
-    );
-    getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-      setTopRatedList([{ data: data }])
-    );
-    getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-      setNowPlayingList([{ data: data }])
-    );
-    getUpcoming(currentLang, upcomingPage).then((data) =>
-      setUpcomingList([{ data: data }])
-    );
-  }, []);
+    const fetchData = async () => {
+      try {
+        const popularData = await getPopularMovies(currentLang, 1);
+        const topRatedData = await getTopRatedMovies(currentLang, 1);
+        const nowPlayingData = await getNowPlaying(currentLang, 1);
+        const upcomingData = await getUpcoming(currentLang, 1);
+
+        setPopularList([{ data: popularData }]);
+        setTopRatedList([{ data: topRatedData }]);
+        setNowPlayingList([{ data: nowPlayingData }]);
+        setUpcomingList([{ data: upcomingData }]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentLang]);
 
   const setSidebar = () => setSidebarActive(!sidebarActive);
 
-  const updatePopPage = (int) => {
-    setPopularPage(popularPage < 1 ? 1 : popularPage + int);
-    getPopularMovies(currentLang, popularPage).then((data) =>
-      setPopularList([...popularList, { data: data, pageFunc: updatePopPage }])
-    );
-  };
-  const updateTRPage = (int) => {
-    setTopRatedPage(topRatedPage < 1 ? 1 : topRatedPage + int);
-  };
-  const updateNPPage = (int) => {
-    setNowPlayingPage(nowPlayingPage < 1 ? 1 : nowPlayingPage + int);
-  };
-  const updateUpcPage = (int) => {
-    setUpcomingPage(upcomingPage < 1 ? 1 : upcomingPage + int);
-  };
-
-  useEffect(() => {
-    if (!popularList[0] || popularList[0].data.page != popularPage)
-      getPopularMovies(currentLang, popularPage).then((data) =>
-        setPopularList(
-          popularList
-            ? [...popularList, { data: data, pageFunc: updatePopPage }]
-            : [{ data: data, pageFunc: updatePopPage }]
-        )
-      );
-    if (!topRatedList[0] || topRatedList[0].data.page != topRatedPage)
-      getTopRatedMovies(currentLang, topRatedPage).then((data) =>
-        setTopRatedList(
-          topRatedList
-            ? [...topRatedList, { data: data, pageFunc: updateTRPage }]
-            : [{ data: data, pageFunc: updateTRPage }]
-        )
-      );
-    if (!nowPlayingList[0] || nowPlayingList[0].data.page != nowPlayingPage)
-      getNowPlaying(currentLang, nowPlayingPage).then((data) =>
-        setNowPlayingList(
-          nowPlayingList
-            ? [...nowPlayingList, { data: data, pageFunc: updateNPPage }]
-            : [{ data: data, pageFunc: updateNPPage }]
-        )
-      );
-    if (!upcomingList[0] || upcomingList[0].data.page != upcomingPage)
-      getUpcoming(currentLang, upcomingPage).then((data) =>
-        setUpcomingList(
-          upcomingList
-            ? [...upcomingList, { data: data, pageFunc: updateUpcPage }]
-            : [{ data: data, pageFunc: updateUpcPage }]
-        )
-      );
-  }, [popularPage, topRatedPage, nowPlayingPage, upcomingPage]);
+  if (loading) {
+    return <div>Loading...</div>; // Global loading indicator
+  }
 
   return (
     <>
@@ -121,7 +78,6 @@ function App() {
         <Route path="/add" element={<Add />} />
         <Route path="/update" element={<Update />} />
         <Route path="/search" element={<SearchResults />} />
-
         <Route
           path="/random"
           element={
@@ -133,9 +89,7 @@ function App() {
             />
           }
         />
-
         <Route path="/about" element={<AboutUs />} />
-
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />

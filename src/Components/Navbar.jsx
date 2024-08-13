@@ -2,19 +2,26 @@ import menuIcon from "../assets/menu-icon.png";
 import "./Navbar.css";
 import textLogo from "../assets/screenvault-text.png";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export default function Navbar({ callback }) {
   const [query, setQuery] = useState("");
+
   const nav = useNavigate();
 
   const updateQuery = (e) => setQuery(e.target.value);
   const sender = (e) => {
     if (e.key === "Enter") {
-      nav(`/search?q=${query.replace(" ", "_")}`);
+      nav(`/search?q=${query.replace(" ", "_")}`, { replace: true });
+      setQuery("");
       location.reload();
     }
+  };
+
+  const alt = () => {
+    const sidebar = document.querySelector(".sidebar");
+    sidebar.classList.toggle("sidebarActive");
   };
 
   return (
