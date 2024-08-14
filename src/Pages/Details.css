@@ -28,10 +28,6 @@
     display: flex;
     gap: 25px;
     padding: 0px;
-    border-radius: 2.5px;
-    border-style: dashed;
-    border-color: yellow;
-    border-width: 5px;
 }
 
 
@@ -42,4 +38,9 @@
     border-style: inset;
     border-color: black;
     border-width: 10px;
+}
+
+
+.buttonFromDetails:hover{
+    background-color: whitesmoke;
 }

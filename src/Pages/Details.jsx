@@ -169,6 +169,7 @@ export default function Details() {
           alt={movieDetails.original_title}
           width={500}
         />
+        <br/> 
         <div className="buttons">
           <button onClick={!inFavorite ? addToFavorite : removeFavorite} className="buttonFromDetails">
             {inFavorite ? "Remove Favorite" : "Add to Favorite"}
