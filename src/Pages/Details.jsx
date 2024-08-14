@@ -45,6 +45,7 @@ export default function Details() {
     });
   }, [itemId]);
   useEffect(() => {
+    setRecommendedList([]);
     fetchVideos(itemId).then((data) => {
       const vid = data.results.filter((video) => video.type === "Trailer")[0];
       vid && setTrailer(`https://www.youtube.com/watch?v=${vid.key}`);
@@ -59,7 +60,7 @@ export default function Details() {
       setLists(myLists);
     });
 
-    getRecommendations(1, "en-US").then((data) => {
+    getRecommendations(itemId, 1, "en-US").then((data) => {
       setRecommendedList([...data.results]);
     });
 
@@ -75,8 +76,6 @@ export default function Details() {
 
     return;
   };
-
-  useEffect(() => console.log(IMDBId), [IMDBId]);
 
   useEffect(() => {
     getFavorites().then((data) => {
