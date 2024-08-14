@@ -34,11 +34,13 @@
   clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
 }
 
+
 .movie-wheel-item img {
   width: 100%;
   height: auto;
   object-fit: cover;
 }
+
 
 @keyframes spin {
   from {
@@ -47,4 +49,25 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.optionsList{
+  border-radius: 20px ;
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.RandomMovieBtn{
+  border-radius: 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: x-large;
+  background-color: rgb(255, 255, 0);
+}
+
+.RandomMovieBtn:hover{
+  background-color: #646cff;
 }

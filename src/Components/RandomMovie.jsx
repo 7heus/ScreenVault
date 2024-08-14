@@ -63,17 +63,18 @@ export default function RandomMovie({
           id="genre"
           value={selectedGenre}
           onChange={(e) => setSelectedGenre(e.target.value)}
+          className="optionsList"
         >
-          <option value="All">All</option>
+          <option className="optionsList" value="All">All</option>
           {genres.map((genre) => (
-            <option key={genre.id} value={genre.id}>
+            <option className="optionsList" key={genre.id} value={genre.id}>
               {genre.name}
             </option>
           ))}
         </select>
       </div>
-
-      <button onClick={randomizeMovie}>Pick a Random Movie</button>
+      <br/>
+      <button className="RandomMovieBtn" onClick={randomizeMovie}>Pick a Random Movie</button>
       <audio ref={audioRef} src={drumRoll} />
 
       {loading && (
