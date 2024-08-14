@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
-import "./RandomMovie.css"; // Import the CSS file
+import "./RandomMovie.css";
 
 export default function RandomMovie({
   popular,
@@ -11,7 +11,6 @@ export default function RandomMovie({
   const [randomMovieData, setRandomMovieData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Combine all movies into a single array
   const allMovies = [
     ...popular.flatMap((page) => page.data.results),
     ...topRated.flatMap((page) => page.data.results),
@@ -24,7 +23,6 @@ export default function RandomMovie({
     const randomIndex = Math.floor(Math.random() * allMovies.length);
     const randomMovie = allMovies[randomIndex];
 
-    // Simulate loading time with a timeout
     setTimeout(() => {
       const randomMovieData = {
         data: {
@@ -33,7 +31,7 @@ export default function RandomMovie({
       };
       setRandomMovieData(randomMovieData);
       setLoading(false);
-    }, 2000); // Adjust the delay as needed
+    }, 2000);
   };
 
   return (
