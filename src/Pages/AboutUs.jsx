@@ -4,7 +4,7 @@ import GitHubImg from "../assets/GitHub.png";
 export default function AboutUs() {
   return (
     <div className="AboutPage">
-      <h1 className="">About Us</h1>
+      <h1 className="AboutUs">About Us</h1>
       <div className="Info">
         <div className="">
           <img
