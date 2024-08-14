@@ -10,7 +10,7 @@
   margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #ccc; /* Optional: add a border for better visibility */
+  border: 2px solid #ccc;
 }
 
 .movie-wheel-inner {
@@ -20,7 +20,7 @@
   width: 100%;
   height: 100%;
   transform: rotate(0deg); /* Start with no rotation */
-  animation: spin 2s linear infinite; /* Continuous spinning */
+  animation: spin 3s linear infinite; /* Continuous spinning */
 }
 
 .movie-wheel-item {
@@ -31,7 +31,7 @@
   top: 50%;
   left: 50%;
   transform-origin: 0% 0%;
-  clip-path: polygon(0% 0%, 100% 0%, 0% 100%); /* Triangle shape */
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
 }
 
 .movie-wheel-item img {
