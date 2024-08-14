@@ -19,6 +19,7 @@ import SearchResults from "./Pages/SearchResults";
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import RandomMovie from "./Components/RandomMovie";
+import Profile from "./Pages/Profile";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
@@ -88,6 +89,7 @@ function App() {
         <Route path="/add" element={<Add />} />
         <Route path="/update" element={<Update />} />
         <Route path="/search" element={<SearchResults />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/random"
           element={

@@ -40,7 +40,7 @@ export default function Details() {
   useEffect(() => {
     fetchVideos(itemId).then((data) => {
       const vid = data.results.filter((video) => video.type === "Trailer")[0];
-      setTrailer(`https://www.youtube.com/watch?v=${vid.key}`);
+      vid && setTrailer(`https://www.youtube.com/watch?v=${vid.key}`);
     });
 
     getLists().then((data) => {
@@ -156,13 +156,16 @@ export default function Details() {
   return (
     <>
       <div className="Details" style={{ paddingTop: 50 }}>
-        <ReactPlayer
-          url={trailer}
-          playing={true}
-          style={{ paddingTop: 50, marginBottom: 50 }}
-          width={800}
-          muted={true}
-        />
+        {trailer && (
+          <ReactPlayer
+            url={trailer}
+            playing={true}
+            style={{ paddingTop: 50, marginBottom: 50 }}
+            width={800}
+            muted={true}
+            controls={true}
+          />
+        )}
         <h1>{movieDetails.title}</h1>
         <img
           src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
