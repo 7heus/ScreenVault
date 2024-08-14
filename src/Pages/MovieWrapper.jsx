@@ -39,14 +39,11 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
     fetchPageData();
   }, [data, currentPage, getMoreData, hasMoreData, current]);
 
-  useEffect(() => {
+  const handleNextPage = async () => {
     if (pseudoCounter >= 5) {
       setCurrent((prev) => prev + 1);
       setPseudoCounter(1);
     }
-  }, [pseudoCounter]);
-
-  const handleNextPage = async () => {
     const newPage = currentPage + 1;
     setCurrentPage(newPage);
     setPseudoCounter((prev) => prev + 1);
@@ -69,6 +66,10 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   }, [displayData]);
 
   const handlePrevPage = () => {
+    if (pseudoCounter >= 5) {
+      setCurrent((prev) => prev - 1);
+      setPseudoCounter(1);
+    }
     if (currentPage > 1) {
       const newPage = currentPage - 1;
       setCurrentPage(newPage);
@@ -76,8 +77,9 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   };
 
   const handlePageChange = async (pageNumber) => {
-    if (pageNumber !== currentPage) {
-      setCurrentPage(pageNumber);
+    if (pageNumber !== current) {
+      setCurrentPage((prev) => prev + pageNumber);
+      setCurrent((prev) => prev + pageNumber / 5);
     }
   };
 
@@ -101,14 +103,14 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
           {">"}
         </button>
         <button
-          onClick={() => handlePageChange(currentPage - 10)}
+          onClick={() => handlePageChange(-10)}
           disabled={currentPage <= 10}
           className="nextBackButtons"
         >
           Previous 10 Pages
         </button>
         <button
-          onClick={() => handlePageChange(currentPage + 10)}
+          onClick={() => handlePageChange(10)}
           disabled={!hasMoreData}
           className="nextBackButtons"
         >
