@@ -2,10 +2,6 @@ import logo from "../assets/screenvault-logo.png";
 import { Link } from "react-router-dom";
 import "./HomePage.css";
 
-//Components
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
-
 export default function HomePage() {
   return (
     <div className="">
