@@ -20,22 +20,16 @@ export default function Catalog({
           data={popular}
           getMoreData={getMorePopularMovies}
         />
-        <br />
-        <br />
         <MovieWrap
           h4={"Top Rated"}
           data={topRated}
           getMoreData={getMoreTopRatedMovies}
         />
-        <br />
-        <br />
         <MovieWrap
           h4={"On Theaters"}
           data={nowPlaying}
           getMoreData={getMoreAiringMovies}
         />
-        <br />
-        <br />
         <MovieWrap
           h4={"Upcoming"}
           data={upcoming}
