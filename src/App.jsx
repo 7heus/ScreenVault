@@ -19,7 +19,6 @@ import SearchResults from "./Pages/SearchResults";
 import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import RandomMovie from "./Components/RandomMovie";
-import Profile from "./Pages/Profile";
 
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
@@ -29,41 +28,92 @@ function App() {
   const [upcomingList, setUpcomingList] = useState(null);
   const [sidebarActive, setSidebarActive] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [popularPage, setPopularPage] = useState(1);
-  const [topRatedPage, setTopRatedPage] = useState(1);
-  const [nowPlayingPage, setNowPlayingPage] = useState(1);
-  const [upcomingPage, setUpcomingPage] = useState(1);
+  const [currentPagePopular, setCurrentPagePopular] = useState(1);
+  const [currentPageTopRated, setCurrentPageTopRated] = useState(1);
+  const [currentPageNowPlaying, setCurrentPageNowPlaying] = useState(1);
+  const [currentPageUpcoming, setCurrentPageUpcoming] = useState(1);
 
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const fetchData = async () => {
+    try {
+      const popularData = await getPopularMovies(
+        currentLang,
+        currentPagePopular
+      );
+      const topRatedData = await getTopRatedMovies(
+        currentLang,
+        currentPageTopRated
+      );
+      const nowPlayingData = await getNowPlaying(
+        currentLang,
+        currentPageNowPlaying
+      );
+      const upcomingData = await getUpcoming(currentLang, currentPageUpcoming);
+
+      setPopularList(popularData.results);
+      setTopRatedList(topRatedData.results);
+      setNowPlayingList(nowPlayingData.results);
+      setUpcomingList(upcomingData.results);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const popularData = await getPopularMovies(currentLang, 1);
-        const topRatedData = await getTopRatedMovies(currentLang, 1);
-        const nowPlayingData = await getNowPlaying(currentLang, 1);
-        const upcomingData = await getUpcoming(currentLang, 1);
-
-        setPopularList([{ data: popularData }]);
-        setTopRatedList([{ data: topRatedData }]);
-        setNowPlayingList([{ data: nowPlayingData }]);
-        setUpcomingList([{ data: upcomingData }]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [currentLang]);
+  }, []);
+
+  const setSidebar = () => setSidebarActive(!sidebarActive);
+
+  const handlePrevPage = (setCurrentPage, currentPage) => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = (setCurrentPage, currentPage) => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const getMorePopularMovies = async (page) => {
+    const data = await getPopularMovies(currentLang, page);
+
+    const newPopularList = [...popularList, ...data.results];
+    setPopularList(newPopularList);
+
+    return newPopularList;
+  };
+  const getMoreTopRatedMovies = async (page) => {
+    const data = await getTopRatedMovies(currentLang, page);
+
+    const newTopRatedList = [...topRatedList, ...data.results];
+    setTopRatedList(newTopRatedList);
+
+    return newTopRatedList;
+  };
+  const getMoreUpcomingMovies = async (page) => {
+    const data = await getUpcoming(currentLang, page);
+
+    const newUpcomingList = [...upcomingList, ...data.results];
+    setUpcomingList(newUpcomingList);
+
+    return newUpcomingList;
+  };
+  const getMoreAiringMovies = async (page) => {
+    const data = await getNowPlaying(currentLang, page);
+
+    const newAiringList = [...nowPlayingList, ...data.results];
+    setNowPlayingList(newAiringList);
+
+    return newAiringList;
+  };
 
   if (loading) {
-    return <div>Loading...</div>; // Global loading indicator
+    return <div>Loading...</div>;
   }
-
-  const handleMenuIconHover = () => setSidebarVisible(true);
-  const handleMenuIconLeave = () => setSidebarVisible(false);
+  const handleMenuIconHover = () => setSidebarActive(true);
+  const handleMenuIconLeave = () => setSidebarActive(false);
 
   return (
     <>
@@ -71,7 +121,7 @@ function App() {
         onMenuIconHover={handleMenuIconHover}
         onMenuIconLeave={handleMenuIconLeave}
       />
-      <Sidebar boolean={sidebarVisible} />
+      <Sidebar boolean={!loading && sidebarActive} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -82,6 +132,10 @@ function App() {
               topRated={topRatedList}
               nowPlaying={nowPlayingList}
               upcoming={upcomingList}
+              getMorePopularMovies={getMorePopularMovies}
+              getMoreTopRatedMovies={getMoreTopRatedMovies}
+              getMoreUpcomingMovies={getMoreUpcomingMovies}
+              getMoreAiringMovies={getMoreAiringMovies}
             />
           }
         />
@@ -89,7 +143,6 @@ function App() {
         <Route path="/add" element={<Add />} />
         <Route path="/update" element={<Update />} />
         <Route path="/search" element={<SearchResults />} />
-        <Route path="/profile" element={<Profile />} />
         <Route
           path="/random"
           element={

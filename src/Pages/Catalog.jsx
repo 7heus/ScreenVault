@@ -2,43 +2,45 @@ import { useState, useEffect } from "react";
 import "./Catalog.css";
 import MovieWrap from "./MovieWrapper";
 
-export default function Catalog({ popular, topRated, nowPlaying, upcoming }) {
-  const [currentPopPage, setCurrentPopPage] = useState(0);
-  const [currentTRPage, setCurrentTRPage] = useState(0);
-  const [currentNPPage, setCurrentNPPage] = useState(0);
-  const [currentUCPage, setCurrentUCPage] = useState(0);
-
-  const [popularPage, setPopularPage] = useState(
-    popular ? popular[currentPopPage] : null
-  );
-  const [topRatedPage, setTopRatedPage] = useState(
-    topRated ? topRated[currentTRPage] : null
-  );
-  const [nowPlayingPage, setNowPlayingPage] = useState(
-    nowPlaying ? nowPlaying[currentNPPage] : null
-  );
-  const [upcomingPage, setUpcomingPage] = useState(
-    upcoming ? upcoming[currentUCPage] : null
-  );
-
-  if (!popularPage && !topRatedPage && !nowPlayingPage && !upcomingPage) {
-    return <div>Loading...</div>;
-  }
+export default function Catalog({
+  popular,
+  topRated,
+  nowPlaying,
+  upcoming,
+  getMorePopularMovies,
+  getMoreTopRatedMovies,
+  getMoreUpcomingMovies,
+  getMoreAiringMovies,
+}) {
   return (
     <>
       <div className="page">
-        {popularPage && <MovieWrap h4={"Popular Now"} dat={popularPage} />}
+        <MovieWrap
+          h4={"Popular Now"}
+          data={popular}
+          getMoreData={getMorePopularMovies}
+        />
         <br />
         <br />
-        {topRatedPage && <MovieWrap h4={"Top Rated"} dat={topRatedPage} />}
+        <MovieWrap
+          h4={"Top Rated"}
+          data={topRated}
+          getMoreData={getMoreTopRatedMovies}
+        />
         <br />
         <br />
-        {nowPlayingPage && (
-          <MovieWrap h4={"On Theaters"} dat={nowPlayingPage} />
-        )}
+        <MovieWrap
+          h4={"On Theaters"}
+          data={nowPlaying}
+          getMoreData={getMoreAiringMovies}
+        />
         <br />
         <br />
-        {upcomingPage && <MovieWrap h4={"Upcoming"} dat={upcomingPage} />}
+        <MovieWrap
+          h4={"Upcoming"}
+          data={upcoming}
+          getMoreData={getMoreUpcomingMovies}
+        />
       </div>
     </>
   );
