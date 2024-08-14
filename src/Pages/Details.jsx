@@ -81,7 +81,6 @@ export default function Details() {
   }, [trailer]);
 
   const handleSelect = (e) => {
-    console.log(e.target.value);
     setSelectedList(e.target.value);
   };
 
@@ -173,13 +172,22 @@ export default function Details() {
           width={500}
         />
         <div className="buttons">
-          <button onClick={!inFavorite ? addToFavorite : removeFavorite} className="buttonFromDetails">
+          <button
+            onClick={!inFavorite ? addToFavorite : removeFavorite}
+            className="buttonFromDetails"
+          >
             {inFavorite ? "Remove Favorite" : "Add to Favorite"}
           </button>
-          <button onClick={!isWatched ? addToWatched : removeWatched} className="buttonFromDetails">
+          <button
+            onClick={!isWatched ? addToWatched : removeWatched}
+            className="buttonFromDetails"
+          >
             {!isWatched ? "I watched this" : "Not watched"}
           </button>
-          <button onClick={!isInWatchLater ? addToWatchLater : removeWatchLater} className="buttonFromDetails">
+          <button
+            onClick={!isInWatchLater ? addToWatchLater : removeWatchLater}
+            className="buttonFromDetails"
+          >
             {!isInWatchLater ? "Watch Later" : "Remove from 'Watch Later'"}
           </button>
           <select
@@ -187,7 +195,8 @@ export default function Details() {
             name="lists"
             value={selectedList}
             onChange={handleSelect}
-            className="buttonFromDetails">
+            className="buttonFromDetails"
+          >
             <option value="" disabled hidden>
               ...
             </option>
@@ -197,15 +206,23 @@ export default function Details() {
               </option>
             ))}
           </select>
-          <button onClick={!listsContaining.includes(selectedList) ? addToList: removeFromList} className="buttonFromDetails">
+          <button
+            onClick={
+              !listsContaining.includes(selectedList)
+                ? addToList
+                : removeFromList
+            }
+            className="buttonFromDetails"
+          >
             {listsContaining.includes(selectedList)
               ? "Remove from List"
               : "Add to List"}
           </button>
         </div>
-        <br/>
+        <br />
         <h3>{movieDetails.overview}</h3>
-        <br/><br/>
+        <br />
+        <br />
         <p>
           Genre: {movieDetails.genres[0] && movieDetails.genres[0].name} &{" "}
           {movieDetails.genres[1] && movieDetails.genres[1].name}
