@@ -42,6 +42,7 @@ export default function Catalog({
           getMoreData={getMoreUpcomingMovies}
         />
       </div>
+      <br/><br/>
     </>
   );
 }

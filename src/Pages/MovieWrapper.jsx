@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "../Components/Card";
+import "./MovieWrapper.css";
 
 const NUMBER_OF_ITEMS_PER_PAGE = 4;
 
@@ -61,9 +62,9 @@ export default function MovieWrap({ h4, data, getMoreData }) {
     <div className="movie-wrap">
       <h4>{h4}</h4>
       <div className="buttons">
-        <button onClick={handlePrevPage} disabled={currentPage === 1}>{"<"}</button>
-        <p>Page: {currentPage}</p>
-        <button onClick={handleNextPage} disabled={!hasMoreData}>{">"}</button>
+        <button onClick={handlePrevPage} disabled={currentPage === 1} className="arrows">{"<"}</button>
+        <p style={{fontWeight: "bold"}}>Page: {currentPage}</p>
+        <button onClick={handleNextPage} disabled={!hasMoreData} className="arrows">{">"}</button>
         <button onClick={() => handlePageChange(currentPage + 10)} disabled={!hasMoreData}>Next 10 Pages</button>
         <button onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage <= 10}>Previous 10 Pages</button>
       </div>
