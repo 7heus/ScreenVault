@@ -28,6 +28,15 @@ export default function SearchResults() {
 
     fetchData();
   }, [query]);
+  const getMoreMovies = async (page) => {
+    const data = await searchForMovie(query, "en-US", page, false);
+    console.log(data);
+
+    // const newMovieList = data && [...resultMovie, data.results];
+    // setResultMovie(newMovieList);
+
+    return;
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -38,9 +47,16 @@ export default function SearchResults() {
       <div className="page">
         <div className="results">
           {resultMovie.length > 0 && (
-            <MovieWrap h4={"Movies"} data={resultMovie} />
+            <MovieWrap
+              h4={"Movies"}
+              data={resultMovie}
+              moreData={true}
+              getMoreData={getMoreMovies}
+            />
           )}
-          {resultTV.length > 0 && <MovieWrap h4={"TV Shows"} data={resultTV} />}
+          {resultTV.length > 0 && (
+            <MovieWrap h4={"TV Shows"} data={resultTV} moreData={true} />
+          )}
         </div>
       </div>
     </>
