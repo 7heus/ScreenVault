@@ -6,6 +6,8 @@ const NUMBER_OF_ITEMS_PER_PAGE = 4;
 export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [displayData, setDisplayData] = useState([]);
+  const [pseudoCounter, setPseudoCounter] = useState(1);
+  const [current, setCurrent] = useState(1);
   const [hasMoreData, setHasMoreData] = useState(true); // Track if there's more data to fetch
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
 
         // Check if more data is needed
         if (endIndex >= data.length && hasMoreData) {
-          const moreData = await getMoreData(currentPage);
+          const moreData = await getMoreData(current);
           if (moreData && moreData.length > 0) {
             setHasMoreData(true);
           } else {
@@ -30,26 +32,43 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
         }
       } else {
         // Fetch data if not available
-        await getMoreData(currentPage);
+        await getMoreData(current);
       }
     };
 
     fetchPageData();
-  }, [data, currentPage, getMoreData, hasMoreData]);
+  }, [data, currentPage, getMoreData, hasMoreData, current]);
+
+  useEffect(() => {
+    if (pseudoCounter >= 5) {
+      setCurrent((prev) => prev + 1);
+      setPseudoCounter(1);
+    }
+    console.log(pseudoCounter);
+    console.log(current);
+  }, [pseudoCounter]);
 
   const handleNextPage = async () => {
     const newPage = currentPage + 1;
     setCurrentPage(newPage);
+    setPseudoCounter((prev) => prev + 1);
     // if items in state are enough to display, otherwise fetch more
     if (data.length > newPage * NUMBER_OF_ITEMS_PER_PAGE) {
+      setHasMoreData(true);
       const startIndex =
         newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE;
       const endIndex = newPage * NUMBER_OF_ITEMS_PER_PAGE;
       setDisplayData(data.slice(startIndex, endIndex));
     } else {
-      moreData ? await getMoreData(newPage) : console.log("done");
+      moreData ? await getMoreData(current) : console.log("done");
     }
   };
+
+  useEffect(() => {
+    if (data.length < currentPage * NUMBER_OF_ITEMS_PER_PAGE)
+      setHasMoreData(false);
+    else setHasMoreData(true);
+  }, [displayData]);
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -68,11 +87,35 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
     <div className="movie-wrap">
       <h4>{h4}</h4>
       <div className="buttons">
-        <button onClick={handlePrevPage} disabled={currentPage === 1} className="arrows">{"<"}</button>
-        <p style={{fontWeight: "bold"}}>Page: {currentPage}</p>
-        <button onClick={handleNextPage} disabled={!hasMoreData} className="arrows">{">"}</button>
-        <button onClick={() => handlePageChange(currentPage + 10)} disabled={!hasMoreData} className="nextBackButtons">Next 10 Pages</button>
-        <button onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage <= 10} className="nextBackButtons">Previous 10 Pages</button>
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="arrows"
+        >
+          {"<"}
+        </button>
+        <p style={{ fontWeight: "bold" }}>Page: {currentPage}</p>
+        <button
+          onClick={handleNextPage}
+          disabled={!hasMoreData}
+          className="arrows"
+        >
+          {">"}
+        </button>
+        <button
+          onClick={() => handlePageChange(currentPage - 10)}
+          disabled={currentPage <= 10}
+          className="nextBackButtons"
+        >
+          Previous 10 Pages
+        </button>
+        <button
+          onClick={() => handlePageChange(currentPage + 10)}
+          disabled={!hasMoreData}
+          className="nextBackButtons"
+        >
+          Next 10 Pages
+        </button>
       </div>
       <div className="movie">
         {displayData.map((movie, index) => (
