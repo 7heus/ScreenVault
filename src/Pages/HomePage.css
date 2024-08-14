@@ -4,24 +4,32 @@ body {
   color: white;
 }
 
-.logo {
-  height: 20em;
-  width: 20em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms, width 0.5s, height 0.5s;
-}
-
 .welcome {
   color: white;
   font-weight: bold;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-  width: 25em;
-  height: 25em;
+.logo {
+  height: 20em;
+  width: 20em;
+  will-change: filter, transform; /* Hint to the browser that filter and transform properties will change, which can optimize performance */
+  transition: filter 300ms, width 0.5s, height 0.5s; /* Smooth transitions for filter, width, and height changes, with specified durations */
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+/* Keyframes for the spinning animation */
+@keyframes spinCoin {
+  from {
+    transform: rotateY(0deg); /* Starting state: no rotation along the Y-axis */
+  }
+  to {
+    transform: rotateY(360deg); /* Ending state: rotate 360 degrees along the Y-axis */
+  }
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa); /* Apply a drop shadow with specified offsets and color when hovered */
+  width: 27.5em;
+  height: 27.5em;
+  animation: spinCoin 3s linear infinite; /* Apply the spinCoin animation with a duration of 3 seconds, linear timing function, and infinite repetition */
+  padding-top: 55px;
 }
