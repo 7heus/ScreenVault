@@ -55,7 +55,7 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
       const endIndex = newPage * NUMBER_OF_ITEMS_PER_PAGE;
       setDisplayData(data.slice(startIndex, endIndex));
     } else {
-      moreData ? await getMoreData(current) : console.log("done");
+      moreData && (await getMoreData(current));
     }
   };
 
