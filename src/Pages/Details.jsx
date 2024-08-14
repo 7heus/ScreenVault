@@ -1,9 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getMovieDetails, fetchVideos } from "../../lib/TMDb";
+import {
+  getMovieDetails,
+  fetchVideos,
+  getRecommendations,
+} from "../../lib/TMDb";
 import "./Details.css";
 import IMDbpic from "../assets/IMDb.png";
 import ReactPlayer from "react-player";
+import MovieWrap from "./MovieWrapper";
 import {
   getLists,
   updateList,
@@ -31,6 +36,8 @@ export default function Details() {
   const [listsContaining, setListsContaining] = useState([]);
   const [isInWatchLater, setIsInWatchLater] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
+  const [IMDBId, setIMDbId] = useState("");
+  const [recommendedList, setRecommendedList] = useState([]);
 
   useEffect(() => {
     getMovieDetails(itemId).then((data) => {
@@ -51,7 +58,25 @@ export default function Details() {
       });
       setLists(myLists);
     });
+
+    getRecommendations(1, "en-US").then((data) => {
+      setRecommendedList([...data.results]);
+    });
+
+    movieDetails && setIMDbId(movieDetails.imdb_id);
   }, [movieDetails]);
+
+  const getMoreRecommended = async (page) => {
+    const data = await getRecommendations(page, "en-US");
+    console.log(data);
+
+    const newMovieList = data && [...recommendedList, ...data.results];
+    setRecommendedList(newMovieList);
+
+    return;
+  };
+
+  useEffect(() => console.log(IMDBId), [IMDBId]);
 
   useEffect(() => {
     getFavorites().then((data) => {
@@ -249,7 +274,13 @@ export default function Details() {
               : "Add to List"}
           </button>
         </div>
-        <a href="https://www.imdb.com/">
+        <MovieWrap
+          h4={"Recommendations"}
+          data={recommendedList}
+          getMoreData={getMoreRecommended}
+          moreData={true}
+        />
+        <a href={`https://www.imdb.com/title/${IMDBId}`}>
           <img className="IMDpic" src={IMDbpic} />
         </a>
         <p className="rating">Rating: {movieDetails.vote_average}</p>
