@@ -61,17 +61,16 @@ function App() {
     return <div>Loading...</div>; // Global loading indicator
   }
 
-
   const handleMenuIconHover = () => setSidebarVisible(true);
   const handleMenuIconLeave = () => setSidebarVisible(false);
 
   return (
     <>
       <Navbar
-      onMenuIconHover={handleMenuIconHover}
-      onMenuIconLeave={handleMenuIconLeave}
-      /> 
-      <Sidebar boolean={sidebarVisible} /> 
+        onMenuIconHover={handleMenuIconHover}
+        onMenuIconLeave={handleMenuIconLeave}
+      />
+      <Sidebar boolean={sidebarVisible} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
