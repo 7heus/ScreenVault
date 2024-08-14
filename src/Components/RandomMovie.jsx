@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Card from "./Card";
 import "./RandomMovie.css";
+import drumRoll from "../assets/mixkit-drum-roll-566.mp3";
 
 export default function RandomMovie({
   popular,
@@ -10,26 +11,22 @@ export default function RandomMovie({
 }) {
   const [randomMovieData, setRandomMovieData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const audioRef = useRef(null);
 
-  const allMovies = [
-    ...popular.flatMap((page) => page.data.results),
-    ...topRated.flatMap((page) => page.data.results),
-    ...nowPlaying.flatMap((page) => page.data.results),
-    ...upcoming.flatMap((page) => page.data.results),
-  ];
+  const allMovies = [...popular, ...topRated, ...nowPlaying, ...upcoming];
 
   const randomizeMovie = () => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = 1.5;
+      audioRef.current.play();
+    }
+
     setLoading(true);
     const randomIndex = Math.floor(Math.random() * allMovies.length);
     const randomMovie = allMovies[randomIndex];
 
     setTimeout(() => {
-      const randomMovieData = {
-        data: {
-          results: [randomMovie],
-        },
-      };
-      setRandomMovieData(randomMovieData);
+      setRandomMovieData(randomMovie);
       setLoading(false);
     }, 2000);
   };
@@ -38,6 +35,7 @@ export default function RandomMovie({
     <div className="random-movie-page">
       <h1>Don't know what to watch?</h1>
       <button onClick={randomizeMovie}>Pick a Random Movie</button>
+      <audio ref={audioRef} src={drumRoll} />
       {loading && (
         <div className="movie-wheel">
           <div className="movie-wheel-inner">
@@ -58,9 +56,8 @@ export default function RandomMovie({
       )}
       {randomMovieData && !loading && (
         <div>
-          {/* Display random movie details here */}
-          <h2>{randomMovieData.data.results[0].title}</h2>
-          <Card movie={randomMovieData.data.results[0]} />
+          <h2>{randomMovieData.title}</h2>
+          <Card movie={randomMovieData} />
         </div>
       )}
     </div>
