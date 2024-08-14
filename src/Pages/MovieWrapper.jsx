@@ -67,20 +67,12 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   return (
     <div className="movie-wrap">
       <h4>{h4}</h4>
-      <div className="buttons" style={{ border: "none", borderStyle: "none" }}>
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage <= 1 ? true : false}
-        >
-          {"<"}
-        </button>
-        <p>Page: {currentPage}</p>
-        <button
-          onClick={handleNextPage}
-          disabled={data.length < NUMBER_OF_ITEMS_PER_PAGE ? true : false}
-        >
-          {">"}
-        </button>
+      <div className="buttons">
+        <button onClick={handlePrevPage} disabled={currentPage === 1} className="arrows">{"<"}</button>
+        <p style={{fontWeight: "bold"}}>Page: {currentPage}</p>
+        <button onClick={handleNextPage} disabled={!hasMoreData} className="arrows">{">"}</button>
+        <button onClick={() => handlePageChange(currentPage + 10)} disabled={!hasMoreData} className="nextBackButtons">Next 10 Pages</button>
+        <button onClick={() => handlePageChange(currentPage - 10)} disabled={currentPage <= 10} className="nextBackButtons">Previous 10 Pages</button>
       </div>
       <div className="movie">
         {displayData.map((movie, index) => (

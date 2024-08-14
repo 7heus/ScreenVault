@@ -3,4 +3,14 @@
     background-color: black;
     color: white;
     font-weight: bold;
+    cursor: pointer;
+}
+
+
+.nextBackButtons{
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
