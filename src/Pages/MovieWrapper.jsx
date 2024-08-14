@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "../Components/Card";
 const NUMBER_OF_ITEMS_PER_PAGE = 4;
-export default function MovieWrap({ h4, data, getMoreData }) {
+export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [displayData, setDisplayData] = useState([]);
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function MovieWrap({ h4, data, getMoreData }) {
       const endIndex = newPage * NUMBER_OF_ITEMS_PER_PAGE;
       setDisplayData(data.slice(startIndex, endIndex));
     } else {
-      await getMoreData(newPage);
+      moreData ? await getMoreData(newPage) : console.log("done");
     }
   };
   const handlePrevPage = () => {
@@ -35,10 +35,20 @@ export default function MovieWrap({ h4, data, getMoreData }) {
   return (
     <div className="movie-wrap">
       <h4>{h4}</h4>
-      <div className="buttons">
-        <button onClick={handlePrevPage}>{"<"}</button>
+      <div className="buttons" style={{ border: "none", borderStyle: "none" }}>
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage <= 1 ? true : false}
+        >
+          {"<"}
+        </button>
         <p>Page: {currentPage}</p>
-        <button onClick={handleNextPage}>{">"}</button>
+        <button
+          onClick={handleNextPage}
+          disabled={data.length < NUMBER_OF_ITEMS_PER_PAGE ? true : false}
+        >
+          {">"}
+        </button>
       </div>
       <div className="movie">
         {displayData.map((movie, index) => {
