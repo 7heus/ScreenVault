@@ -44,8 +44,6 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
       setCurrent((prev) => prev + 1);
       setPseudoCounter(1);
     }
-    console.log(pseudoCounter);
-    console.log(current);
   }, [pseudoCounter]);
 
   const handleNextPage = async () => {
