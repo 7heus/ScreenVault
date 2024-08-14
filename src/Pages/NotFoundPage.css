@@ -1,7 +1,7 @@
 .notFoundPic{
-    position: absolute;
-    left: 350px;
-    top: 120px;
-    width: 800px;
-    height: 500px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
 }
