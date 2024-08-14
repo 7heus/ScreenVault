@@ -11,8 +11,20 @@
   opacity: 0.5;
 }
 
-.sidebar .links:hover {
-  color: white;
+.links {
+  color: #fff; /* Default link color */
+  opacity: 1; /* Ensure full opacity */
+  text-decoration: none;
+  display: block; /* Make sure links are block level if needed */
+  padding: 5px; /* Add padding for better spacing */
+  transition: color 0.3s, text-shadow 0.3s, background-color 0.3s; /* Smooth transition for color and effects */
+}
+
+.links:hover {
+  color: #ffffff; /* Brighter white text color */
+  text-shadow: 0 0 10px #ffffff; /* Increased white glow effect */
+  background-color: #646cff; /* Semi-transparent background color */
+  font-weight: bold; /* Make text bold for better visibility */
 }
 
 @media (max-width: 768px) {
