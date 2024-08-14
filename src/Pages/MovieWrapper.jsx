@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../Components/Card";
 
 const NUMBER_OF_ITEMS_PER_PAGE = 4;
 
 export default function MovieWrap({ h4, data, getMoreData }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [displayData, setDisplayData] = useState([]);
 
-  const startIndex =
-    currentPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE;
-  const endIndex = currentPage * NUMBER_OF_ITEMS_PER_PAGE;
+  useEffect(() => {
+    const startIndex =
+      currentPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE;
+    const endIndex = currentPage * NUMBER_OF_ITEMS_PER_PAGE;
 
-  const [displayData, setDisplayData] = useState(
-    data.slice(startIndex, endIndex)
-  );
+    setDisplayData(data.slice(startIndex, endIndex));
+  }, [data]);
 
-  const handleNextPage = () => {
+  const handleNextPage = async () => {
     const newPage = currentPage + 1;
     setCurrentPage(newPage);
 
@@ -26,7 +27,7 @@ export default function MovieWrap({ h4, data, getMoreData }) {
 
       setDisplayData(data.slice(startIndex, endIndex));
     } else {
-      getMoreData(newPage);
+      await getMoreData(newPage);
     }
   };
 
