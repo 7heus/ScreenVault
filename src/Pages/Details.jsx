@@ -79,8 +79,8 @@ export default function Details() {
   useEffect(() => {
     getFavorites().then((data) => {
       data.forEach((li) => {
-        if (String.toString(li.movieId) === String.toString(itemId))
-          setInFavorite(true);
+        if (li.movieId == itemId) setInFavorite(true);
+        else return;
       });
     });
     getLists().then((data) => {
@@ -101,25 +101,22 @@ export default function Details() {
           setIsWatched(true);
       });
     });
-  }, [trailer]);
+  }, [trailer, movieDetails, recommendedList]);
 
   const handleSelect = (e) => {
     setSelectedList(e.target.value);
   };
 
   const addToFavorite = () => {
-    checkIfExists("favorites", itemId).then((value) => {
-      if (value === true) return;
-      postFavorite(`${itemId}`);
-      setInFavorite(true);
-    });
+    if (inFavorite) return;
+    postFavorite(`${itemId}`);
+    setInFavorite(true);
   };
 
   const removeFavorite = () => {
     getFavorites().then((data) => {
       const toDelete = data.filter((x) => x.movieId === `${itemId}`)[0];
-      deleteFavorite(toDelete.id).then(() => console.log("deleted"));
-      setInFavorite(false);
+      deleteFavorite(toDelete.id).then(() => setInFavorite(false));
     });
   };
 
@@ -226,22 +223,24 @@ export default function Details() {
         </div>
         <div className="buttons">
           <button
-            onClick={!inFavorite ? addToFavorite : removeFavorite}
+            onClick={inFavorite && inFavorite ? removeFavorite : addToFavorite}
             className="buttonFromDetails"
           >
-            {inFavorite ? "Remove Favorite" : "Add to Favorite"}
+            {inFavorite && inFavorite ? "Remove Favorite" : "Add to Favorite"}
           </button>
           <button
             onClick={!isWatched ? addToWatched : removeWatched}
             className="buttonFromDetails"
           >
-            {!isWatched ? "I watched this" : "Not watched"}
+            {isWatched && isWatched ? "Not watched" : "I watched this"}
           </button>
           <button
             onClick={!isInWatchLater ? addToWatchLater : removeWatchLater}
             className="buttonFromDetails"
           >
-            {!isInWatchLater ? "Watch Later" : "Remove from 'Watch Later'"}
+            {isInWatchLater && isInWatchLater
+              ? "Remove from 'Watch Later'"
+              : "Watch Later"}
           </button>
           <select
             id="lists"
