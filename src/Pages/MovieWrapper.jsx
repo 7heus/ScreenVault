@@ -3,8 +3,7 @@ import Card from "../Components/Card";
 import "./MovieWrapper.css";
 
 const NUMBER_OF_ITEMS_PER_PAGE = 4;
-
-export default function MovieWrap({ h4, data, getMoreData }) {
+export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [displayData, setDisplayData] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(true); // Track if there's more data to fetch
@@ -39,9 +38,16 @@ export default function MovieWrap({ h4, data, getMoreData }) {
   }, [data, currentPage, getMoreData, hasMoreData]);
 
   const handleNextPage = async () => {
-    if (hasMoreData) {
-      const newPage = currentPage + 1;
-      setCurrentPage(newPage);
+    const newPage = currentPage + 1;
+    setCurrentPage(newPage);
+    // if items in state are enough to display, otherwise fetch more
+    if (data.length > newPage * NUMBER_OF_ITEMS_PER_PAGE) {
+      const startIndex =
+        newPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE;
+      const endIndex = newPage * NUMBER_OF_ITEMS_PER_PAGE;
+      setDisplayData(data.slice(startIndex, endIndex));
+    } else {
+      moreData ? await getMoreData(newPage) : console.log("done");
     }
   };
 
