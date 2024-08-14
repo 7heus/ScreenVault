@@ -30,10 +30,9 @@ export default function SearchResults() {
   }, [query]);
   const getMoreMovies = async (page) => {
     const data = await searchForMovie(query, "en-US", page, false);
-    console.log(data);
 
-    // const newMovieList = data && [...resultMovie, data.results];
-    // setResultMovie(newMovieList);
+    const newMovieList = data && [...resultMovie, ...data.results];
+    setResultMovie(newMovieList);
 
     return;
   };

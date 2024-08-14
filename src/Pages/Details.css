@@ -13,6 +13,7 @@
 .IMDpic {
   width: 75px;
   border-radius: 5px;
+  padding-top: 20px;
 }
 
 .rating {
@@ -39,8 +40,36 @@
 
 .buttonFromDetails:hover {
   background-color: whitesmoke;
+  color: black;
 }
 
 select {
   color: black;
+}
+
+.movie-flex {
+  display: flex;
+  width: unset;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.movie-flex img {
+  height: min-content;
+}
+
+.movie-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #242424;
+  flex-wrap: wrap;
+  width: 40vw;
+}
+
+.movie-div p,
+.movie-div h1,
+.movie-div h3 {
+  padding-left: 20px;
+  padding-right: 20px;
 }

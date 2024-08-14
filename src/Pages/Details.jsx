@@ -1,9 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getMovieDetails, fetchVideos } from "../../lib/TMDb";
+import {
+  getMovieDetails,
+  fetchVideos,
+  getRecommendations,
+} from "../../lib/TMDb";
 import "./Details.css";
 import IMDbpic from "../assets/IMDb.png";
 import ReactPlayer from "react-player";
+import MovieWrap from "./MovieWrapper";
 import {
   getLists,
   updateList,
@@ -31,6 +36,8 @@ export default function Details() {
   const [listsContaining, setListsContaining] = useState([]);
   const [isInWatchLater, setIsInWatchLater] = useState(false);
   const [isWatched, setIsWatched] = useState(false);
+  const [IMDBId, setIMDbId] = useState("");
+  const [recommendedList, setRecommendedList] = useState([]);
 
   useEffect(() => {
     getMovieDetails(itemId).then((data) => {
@@ -51,7 +58,25 @@ export default function Details() {
       });
       setLists(myLists);
     });
+
+    getRecommendations(1, "en-US").then((data) => {
+      setRecommendedList([...data.results]);
+    });
+
+    movieDetails && setIMDbId(movieDetails.imdb_id);
   }, [movieDetails]);
+
+  const getMoreRecommended = async (page) => {
+    const data = await getRecommendations(page, "en-US");
+    console.log(data);
+
+    const newMovieList = data && [...recommendedList, ...data.results];
+    setRecommendedList(newMovieList);
+
+    return;
+  };
+
+  useEffect(() => console.log(IMDBId), [IMDBId]);
 
   useEffect(() => {
     getFavorites().then((data) => {
@@ -165,13 +190,42 @@ export default function Details() {
             controls={true}
           />
         )}
-        <h1>{movieDetails.title}</h1>
-        <img
-          src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
-          alt={movieDetails.original_title}
-          width={500}
-        />
-        <br/> 
+
+        <div className="movie-flex">
+          <img
+            src={`https://image.tmdb.org/t/p/original${movieDetails.poster_path}`}
+            alt={movieDetails.original_title}
+            width={500}
+          />
+
+          <div className="movie-div">
+            <h1>{movieDetails.title}</h1>
+            <h3>{movieDetails.overview}</h3>
+            <p>
+              Genre: {movieDetails.genres[0] && movieDetails.genres[0].name} &{" "}
+              {movieDetails.genres[1] && movieDetails.genres[1].name}
+            </p>
+            <p>
+              Release Date:{" "}
+              {movieDetails.release_date && movieDetails.release_date}
+            </p>
+            <p>
+              Origin Country:{" "}
+              {movieDetails.origin_country && movieDetails.origin_country}
+            </p>
+            <p>
+              Original Language:{" "}
+              {movieDetails.original_language &&
+                movieDetails.original_language.toUpperCase()}
+            </p>
+            <p>Runtime: {movieDetails.runtime && movieDetails.runtime} min</p>
+            <p>
+              Production:{" "}
+              {movieDetails.production_companies[0] &&
+                movieDetails.production_companies[0].name}
+            </p>
+          </div>
+        </div>
         <div className="buttons">
           <button
             onClick={!inFavorite ? addToFavorite : removeFavorite}
@@ -220,37 +274,13 @@ export default function Details() {
               : "Add to List"}
           </button>
         </div>
-        <br />
-        <h3>{movieDetails.overview}</h3>
-        <br />
-        <br />
-        <p>
-          Genre: {movieDetails.genres[0] && movieDetails.genres[0].name} &{" "}
-          {movieDetails.genres[1] && movieDetails.genres[1].name}
-        </p>
-        <p>
-          Release Date: {movieDetails.release_date && movieDetails.release_date}
-        </p>
-        <p>
-          Origin Country:{" "}
-          {movieDetails.origin_country && movieDetails.origin_country}
-        </p>
-        <p>
-          Original Language:{" "}
-          {movieDetails.original_language &&
-            movieDetails.original_language.toUpperCase()}
-        </p>
-        <p>Runtime: {movieDetails.runtime && movieDetails.runtime} min</p>
-        <p>
-          Production:{" "}
-          {movieDetails.production_companies[0] &&
-            movieDetails.production_companies[0].name}
-        </p>
-        <br />
-        <br />
-        <br />
-        <br />
-        <a href="https://www.imdb.com/">
+        <MovieWrap
+          h4={"Recommendations"}
+          data={recommendedList}
+          getMoreData={getMoreRecommended}
+          moreData={true}
+        />
+        <a href={`https://www.imdb.com/title/${IMDBId}`}>
           <img className="IMDpic" src={IMDbpic} />
         </a>
         <p className="rating">Rating: {movieDetails.vote_average}</p>

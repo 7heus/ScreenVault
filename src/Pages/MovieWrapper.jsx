@@ -55,7 +55,7 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
       const endIndex = newPage * NUMBER_OF_ITEMS_PER_PAGE;
       setDisplayData(data.slice(startIndex, endIndex));
     } else {
-      moreData ? await getMoreData(current) : console.log("done");
+      moreData && (await getMoreData(current));
     }
   };
 
@@ -86,6 +86,7 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
   return (
     <div className="movie-wrap">
       <h4>{h4}</h4>
+
       <div className="buttons">
         <button
           onClick={handlePrevPage}
@@ -117,12 +118,14 @@ export default function MovieWrap({ h4, data, getMoreData, moreData }) {
           Next 10 Pages
         </button>
       </div>
-      <div className="movie">
-        {displayData.map((movie, index) => (
-          <div className="card" key={index}>
-            <Card movie={movie} />
-          </div>
-        ))}
+      <div className="mvie">
+        <div className="movie">
+          {displayData.map((movie, index) => (
+            <div className="card" key={index}>
+              <Card movie={movie} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
