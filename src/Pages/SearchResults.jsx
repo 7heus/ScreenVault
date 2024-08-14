@@ -17,8 +17,8 @@ export default function SearchResults() {
       try {
         const movieData = await searchForMovie(query, "en-US", 1, false);
         const tvData = await searchForTV(query, "en-US", 1, false);
-        setResultMovie([{ data: movieData }]);
-        setResultTV([{ data: tvData }]);
+        setResultMovie(movieData.results);
+        setResultTV(tvData.results);
       } catch (error) {
         console.error("Error fetching search results:", error);
       } finally {
@@ -27,7 +27,7 @@ export default function SearchResults() {
     };
 
     fetchData();
-  }, [query]); // Re-fetch data whenever `query` changes
+  }, [query]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -37,12 +37,10 @@ export default function SearchResults() {
     <>
       <div className="page">
         <div className="results">
-          {resultMovie[0] && resultMovie[0].data.results.length > 0 && (
-            <MovieWrap h4={"Movies"} dat={resultMovie[0]} />
+          {resultMovie.length > 0 && (
+            <MovieWrap h4={"Movies"} data={resultMovie} />
           )}
-          {resultTV[0] && resultTV[0].data.results.length > 0 && (
-            <MovieWrap h4={"TV Shows"} dat={resultTV[0]} />
-          )}
+          {resultTV.length > 0 && <MovieWrap h4={"TV Shows"} data={resultTV} />}
         </div>
       </div>
     </>

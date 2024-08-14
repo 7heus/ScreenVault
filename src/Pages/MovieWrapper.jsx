@@ -4,15 +4,18 @@ const NUMBER_OF_ITEMS_PER_PAGE = 4;
 export default function MovieWrap({ h4, data, getMoreData }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [displayData, setDisplayData] = useState([]);
+
   useEffect(() => {
     const startIndex =
       currentPage * NUMBER_OF_ITEMS_PER_PAGE - NUMBER_OF_ITEMS_PER_PAGE;
     const endIndex = currentPage * NUMBER_OF_ITEMS_PER_PAGE;
     setDisplayData(data.slice(startIndex, endIndex));
   }, [data]);
+
   const handleNextPage = async () => {
     const newPage = currentPage + 1;
     setCurrentPage(newPage);
+
     // if items in state are enough to display, otherwise fetch more
     if (data.length > newPage * NUMBER_OF_ITEMS_PER_PAGE) {
       const startIndex =
@@ -23,6 +26,7 @@ export default function MovieWrap({ h4, data, getMoreData }) {
       await getMoreData(newPage);
     }
   };
+
   const handlePrevPage = () => {
     if (currentPage === 1) return;
     const newPage = currentPage - 1;
