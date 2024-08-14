@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Sidebar({ boolean }) {
-  
-  
   const [isVisible, setIsVisible] = useState(boolean);
 
   useEffect(() => {
@@ -18,7 +16,6 @@ export default function Sidebar({ boolean }) {
   const handleMouseLeave = () => {
     setIsVisible(false);
   };
-
 
   const items = [
     {
@@ -50,7 +47,7 @@ export default function Sidebar({ boolean }) {
   return (
     <div
       className="sidebar"
-      style={{ right: isVisible ? "85%" : "100%" }}
+      style={{ right: isVisible ? "85%" : "99.9%" }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -62,6 +59,3 @@ export default function Sidebar({ boolean }) {
     </div>
   );
 }
-
-
-
