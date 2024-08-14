@@ -8,34 +8,47 @@ export default function RandomMovie({
   topRated,
   nowPlaying,
   upcoming,
+  genres,
+  getMoviesByGenre, // Receive the function prop
 }) {
+  const [selectedGenre, setSelectedGenre] = useState("All");
   const [randomMovieData, setRandomMovieData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [genreMovies, setGenreMovies] = useState([]);
   const audioRef = useRef(null);
 
-  const allMovies = [
-    ...popular.flatMap((page) => page.data.results),
-    ...topRated.flatMap((page) => page.data.results),
-    ...nowPlaying.flatMap((page) => page.data.results),
-    ...upcoming.flatMap((page) => page.data.results),
-  ];
+  useEffect(() => {
+    const fetchGenreMovies = async () => {
+      if (selectedGenre !== "All") {
+        const movies = await getMoviesByGenre(selectedGenre);
+        setGenreMovies(movies.results || []);
+      } else {
+        setGenreMovies([...popular, ...topRated, ...nowPlaying, ...upcoming]);
+      }
+    };
+
+    fetchGenreMovies();
+  }, [
+    selectedGenre,
+    popular,
+    topRated,
+    nowPlaying,
+    upcoming,
+    getMoviesByGenre,
+  ]);
 
   const randomizeMovie = () => {
     if (audioRef.current) {
       audioRef.current.playbackRate = 1.5;
       audioRef.current.play();
     }
+
     setLoading(true);
-    const randomIndex = Math.floor(Math.random() * allMovies.length);
-    const randomMovie = allMovies[randomIndex];
+    const randomIndex = Math.floor(Math.random() * genreMovies.length);
+    const randomMovie = genreMovies[randomIndex];
 
     setTimeout(() => {
-      const randomMovieData = {
-        data: {
-          results: [randomMovie],
-        },
-      };
-      setRandomMovieData(randomMovieData);
+      setRandomMovieData(randomMovie);
       setLoading(false);
     }, 2000);
   };
@@ -43,12 +56,30 @@ export default function RandomMovie({
   return (
     <div className="random-movie-page">
       <h1>Don't know what to watch?</h1>
+
+      <div className="genre-selector">
+        <label htmlFor="genre">Select Genre: </label>
+        <select
+          id="genre"
+          value={selectedGenre}
+          onChange={(e) => setSelectedGenre(e.target.value)}
+        >
+          <option value="All">All</option>
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <button onClick={randomizeMovie}>Pick a Random Movie</button>
       <audio ref={audioRef} src={drumRoll} />
+
       {loading && (
         <div className="movie-wheel">
           <div className="movie-wheel-inner">
-            {allMovies.slice(0, 12).map((movie, index) => (
+            {genreMovies.slice(0, 12).map((movie, index) => (
               <div
                 className="movie-wheel-item"
                 style={{ transform: `rotate(${index * 30}deg)` }}
@@ -63,10 +94,11 @@ export default function RandomMovie({
           </div>
         </div>
       )}
+
       {randomMovieData && !loading && (
         <div>
-          <h2>{randomMovieData.data.results[0].title}</h2>
-          <Card movie={randomMovieData.data.results[0]} />
+          <h2>{randomMovieData.title}</h2>
+          <Card movie={randomMovieData} />
         </div>
       )}
     </div>
