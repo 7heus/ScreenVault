@@ -68,8 +68,7 @@ export default function Details() {
   }, [movieDetails]);
 
   const getMoreRecommended = async (page) => {
-    const data = await getRecommendations(page, "en-US");
-    console.log(data);
+    const data = await getRecommendations(itemId, page, "en-US");
 
     const newMovieList = data && [...recommendedList, ...data.results];
     setRecommendedList(newMovieList);
