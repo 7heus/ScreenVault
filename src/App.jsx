@@ -20,8 +20,6 @@ import Footer from "./Components/Footer";
 import Sidebar from "./Components/Sidebar";
 import RandomMovie from "./Components/RandomMovie";
 
-const NUMBER_PER_PAGE = 20;
-
 function App() {
   const [currentLang, setCurrentLang] = useState("en-US");
   const [popularList, setPopularList] = useState(null);
@@ -51,10 +49,10 @@ function App() {
       );
       const upcomingData = await getUpcoming(currentLang, currentPageUpcoming);
 
-      setPopularList([{ data: popularData }]);
-      setTopRatedList([{ data: topRatedData }]);
-      setNowPlayingList([{ data: nowPlayingData }]);
-      setUpcomingList([{ data: upcomingData }]);
+      setPopularList(popularData.results);
+      setTopRatedList(topRatedData.results);
+      setNowPlayingList(nowPlayingData.results);
+      setUpcomingList(upcomingData.results);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -64,13 +62,7 @@ function App() {
 
   useEffect(() => {
     fetchData();
-  }, [
-    currentLang,
-    currentPagePopular,
-    currentPageTopRated,
-    currentPageNowPlaying,
-    currentPageUpcoming,
-  ]);
+  }, []);
 
   const setSidebar = () => setSidebarActive(!sidebarActive);
 
@@ -82,6 +74,15 @@ function App() {
 
   const handleNextPage = (setCurrentPage, currentPage) => {
     setCurrentPage(currentPage + 1);
+  };
+
+  const getMorePopularMovies = async (page) => {
+    const data = await getPopularMovies(currentLang, page);
+
+    const newPopularList = [...popularList, ...data.results];
+    setPopularList(newPopularList);
+
+    return newPopularList;
   };
 
   if (loading) {
@@ -98,21 +99,11 @@ function App() {
           path="/catalog"
           element={
             <Catalog
-              popular={popularList && popularList}
-              topRated={topRatedList && topRatedList}
-              nowPlaying={nowPlayingList && nowPlayingList}
-              upcoming={upcomingList && upcomingList}
-              currentPagePopular={currentPagePopular}
-              currentPageNowPlaying={currentPageNowPlaying}
-              currentPageTopRated={currentPageTopRated}
-              currentPageUpcoming={currentPageUpcoming}
-              setCurrentPageNowPlaying={setCurrentPageNowPlaying}
-              setCurrentPagePopular={setCurrentPagePopular}
-              setCurrentPageTopRated={setCurrentPageTopRated}
-              setCurrentPageUpcoming={setCurrentPageUpcoming}
-              handleNextPage={handleNextPage}
-              handlePrevPage={handlePrevPage}
-              fetch={fetchData}
+              popular={popularList}
+              topRated={topRatedList}
+              nowPlaying={nowPlayingList}
+              upcoming={upcomingList}
+              getMorePopularMovies={getMorePopularMovies}
             />
           }
         />
