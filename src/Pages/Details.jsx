@@ -173,15 +173,13 @@ export default function Details() {
           width={500}
         />
         <div className="buttons">
-          <button onClick={!inFavorite ? addToFavorite : removeFavorite}>
+          <button onClick={!inFavorite ? addToFavorite : removeFavorite} className="buttonFromDetails">
             {inFavorite ? "Remove Favorite" : "Add to Favorite"}
           </button>
-          <button onClick={!isWatched ? addToWatched : removeWatched}>
+          <button onClick={!isWatched ? addToWatched : removeWatched} className="buttonFromDetails">
             {!isWatched ? "I watched this" : "Not watched"}
           </button>
-          <button
-            onClick={!isInWatchLater ? addToWatchLater : removeWatchLater}
-          >
+          <button onClick={!isInWatchLater ? addToWatchLater : removeWatchLater} className="buttonFromDetails">
             {!isInWatchLater ? "Watch Later" : "Remove from 'Watch Later'"}
           </button>
           <select
@@ -189,7 +187,7 @@ export default function Details() {
             name="lists"
             value={selectedList}
             onChange={handleSelect}
-          >
+            className="buttonFromDetails">
             <option value="" disabled hidden>
               ...
             </option>
@@ -199,20 +197,15 @@ export default function Details() {
               </option>
             ))}
           </select>
-          <button
-            onClick={
-              !listsContaining.includes(selectedList)
-                ? addToList
-                : removeFromList
-            }
-          >
+          <button onClick={!listsContaining.includes(selectedList) ? addToList: removeFromList} className="buttonFromDetails">
             {listsContaining.includes(selectedList)
               ? "Remove from List"
               : "Add to List"}
           </button>
         </div>
+        <br/>
         <h3>{movieDetails.overview}</h3>
-        <br />
+        <br/><br/>
         <p>
           Genre: {movieDetails.genres[0] && movieDetails.genres[0].name} &{" "}
           {movieDetails.genres[1] && movieDetails.genres[1].name}

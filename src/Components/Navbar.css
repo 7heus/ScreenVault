@@ -25,10 +25,20 @@
 }
 
 .textLogo {
+  position: absolute;
+  top: -25px;
+  right: 35px;
   width: 250px;
-  padding-right: 20px;
-  margin-top: 12.5px;
+  padding: 0px;
+  margin: 0px;
 }
+
+.textLogo:hover {
+  background-color: #F0C000;
+  clip-path: inset(27% 0 27% 0); /* Reduces height of the hover effect */
+}
+
+
 input {
   width: 15%;
   border: none;

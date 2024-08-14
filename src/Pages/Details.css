@@ -31,5 +31,15 @@
     border-radius: 2.5px;
     border-style: dashed;
     border-color: yellow;
+    border-width: 5px;
 }
 
+
+.buttonFromDetails{
+    font-weight: bold;
+    background-color: #D4AF37;
+    border-radius: 5px;
+    border-style: inset;
+    border-color: black;
+    border-width: 10px;
+}
