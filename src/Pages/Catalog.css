@@ -1,0 +1,55 @@
+.page-catalog {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.movie {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 2;
+  align-content: center;
+  flex-direction: row;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+  scroll-snap-type: mandatory;
+  background-color: black;
+  gap: 50px;
+  padding: 50px;
+}
+
+/* Scrollbar width and height */
+.movie::-webkit-scrollbar {
+  height: 15px; /* Height of horizontal scrollbar */
+}
+
+/* Scrollbar handle */
+.movie::-webkit-scrollbar-thumb {
+  background-color: white; /* Handle color */
+  border-radius: 6px; /* Rounds the corners of the handle */
+}
+
+/* Scrollbar handle on hover */
+.movie::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker handle color on hover */
+}
+
+/* Scrollbar track */ /* Let this here if we want to put the trak of scrollbar again */
+/* .movie::-webkit-scrollbar-track {
+  background-color: #333; /* Track color */
+
+.card {
+  flex: 0 0 5%;
+}
+
+.movie-wrap .buttons {
+  display: flex;
+  justify-content: row;
+  align-items: center;
+}
+
+.movie-wrap h4 {
+  text-align: start;
+  font-size: 30px;
+  font-weight: bold;
+}

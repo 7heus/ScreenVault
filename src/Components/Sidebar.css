@@ -1,0 +1,40 @@
+.sidebar {
+  position: fixed;
+  width: 15vw;
+  background-color: #5c676a;
+  height: calc(100% - 80px);
+  top: 80px;
+  transition: right 1s;
+  right: 99.9%;
+  z-index: 900;
+  overflow-y: auto;
+  opacity: 0.8;
+}
+
+.links {
+  color: #f0f0f0; /* Lighter default link color for better visibility */
+  text-decoration: none;
+  display: block; /* Make sure links are block level if needed */
+  padding: 5px; /* Add padding for better spacing */
+  transition: color 0.3s, text-shadow 0.3s, background-color 0.3s; /* Smooth transition for color and effects */
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); /* Subtle default text shadow */
+}
+
+.links:hover {
+  color: #ffffff; /* Brighter white text color */
+  text-shadow: 0 0 10px #ffffff; /* Increased white glow effect */
+  background-color: #646cff; /* Semi-transparent background color */
+  font-weight: bold; /* Make text bold for better visibility */
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 70vw;
+  }
+}

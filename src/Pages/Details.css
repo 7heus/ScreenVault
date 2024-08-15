@@ -1,0 +1,75 @@
+.Details {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers items horizontally */
+  justify-content: center; /* Centers items vertically */
+  text-align: center; /* Centers text horizontally */
+  text-align: justify;
+  padding: 20px;
+  max-width: 800px; /* Optional: Adjust based on your needs */
+  margin: 0 auto; /* Centers the container horizontally on the page */
+}
+
+.IMDpic {
+  width: 75px;
+  border-radius: 5px;
+  padding-top: 20px;
+}
+
+.rating {
+  font-weight: bold;
+  color: yellow;
+}
+
+.buttons {
+  font-size: small;
+  display: flex;
+  gap: 25px;
+  padding: 0px;
+  padding-top: 20px;
+}
+
+.buttonFromDetails {
+  font-weight: bold;
+  background-color: #d4af37;
+  border-radius: 5px;
+  border-style: inset;
+  border-color: black;
+  border-width: 10px;
+}
+
+.buttonFromDetails:hover {
+  background-color: whitesmoke;
+  color: black;
+}
+
+select {
+  color: black;
+}
+
+.movie-flex {
+  display: flex;
+  width: unset;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.movie-flex img {
+  height: min-content;
+}
+
+.movie-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #242424;
+  flex-wrap: wrap;
+  width: 40vw;
+}
+
+.movie-div p,
+.movie-div h1,
+.movie-div h3 {
+  padding-left: 20px;
+  padding-right: 20px;
+}

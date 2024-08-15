@@ -1,0 +1,24 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 50px;
+  background-color: #242424;
+}
+
+.create {
+  width: 50vw;
+}
+
+.page button,
+.page select,
+.page input {
+  background-color: whitesmoke;
+  color: black;
+  margin-left: 20px;
+}
+
+.page input {
+  width: unset;
+  text-align: left;
+}

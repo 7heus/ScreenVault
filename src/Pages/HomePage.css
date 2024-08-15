@@ -1,0 +1,35 @@
+body {
+  background: radial-gradient(circle, #a0a0a0, #6b6b6b);
+  /* first (255, 0, 255, 0), second (92, 103, 106, 0) */
+  color: white;
+}
+
+.welcome {
+  color: white;
+  font-weight: bold;
+}
+
+.logo {
+  height: 20em;
+  width: 20em;
+  will-change: filter, transform; /* Hint to the browser that filter and transform properties will change, which can optimize performance */
+  transition: filter 300ms, width 0.5s, height 0.5s; /* Smooth transitions for filter, width, and height changes, with specified durations */
+}
+
+/* Keyframes for the spinning animation */
+@keyframes spinCoin {
+  from {
+    transform: rotateY(0deg); /* Starting state: no rotation along the Y-axis */
+  }
+  to {
+    transform: rotateY(360deg); /* Ending state: rotate 360 degrees along the Y-axis */
+  }
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa); /* Apply a drop shadow with specified offsets and color when hovered */
+  width: 27.5em;
+  height: 27.5em;
+  animation: spinCoin 3s linear infinite; /* Apply the spinCoin animation with a duration of 3 seconds, linear timing function, and infinite repetition */
+  padding-top: 55px;
+}

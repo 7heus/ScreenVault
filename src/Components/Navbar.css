@@ -1,0 +1,57 @@
+.Navbar {
+  width: 100%;
+  background-color: #5c676a;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  opacity: 0.7;
+}
+
+.menuIcon {
+  width: 50px;
+  height: 50px;
+  background-color: #5c676a;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
+.menuIcon:hover {
+  background-color: #4a5254;
+}
+
+.textLogo {
+  position: absolute;
+  top: -25px;
+  right: 35px;
+  width: 250px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.textLogo:hover {
+  background-color: #646cffaa;
+  clip-path: inset(27% 0 27% 0); /* Reduces height of the hover effect */
+}
+
+
+input {
+  width: 15%;
+  border: none;
+  height: 30px;
+  outline: none;
+  z-index: 1;
+  border-radius: 2.5px;
+  text-align: center;
+  padding-left: 17.5px;
+}
+
+input::placeholder {
+  text-align: center;
+  font-weight: bold;
+  color: black;
+}
