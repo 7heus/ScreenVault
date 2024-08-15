@@ -106,10 +106,17 @@ export default function Profile() {
         <h4>No movies to watch later</h4>
       )}
       <div className="lists">
-        <select name="lists" value={selectedList} onChange={handleSelect}>
-          <option value="" disabled hidden>
-            ...
-          </option>
+        <select
+          name="lists"
+          value={selectedList}
+          onChange={handleSelect}
+          style={{
+            width: "5vw",
+            color: "black",
+            backgroundColor: "whitesmoke",
+          }}
+        >
+          <option value="">None</option>
           {lists.map((x, index) => (
             <option key={index} value={x.id}>
               {x.name}
