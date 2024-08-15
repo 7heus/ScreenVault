@@ -1,5 +1,5 @@
 import MovieWrap from "./MovieWrapper";
-import Card from "../Components/Card";
+import { Link } from "react-router-dom";
 import {
   getFavorites,
   getList,
@@ -105,16 +105,24 @@ export default function Profile() {
       ) : (
         <h4>No movies to watch later</h4>
       )}
-      <select name="lists" value={selectedList} onChange={handleSelect}>
-        <option value="" disabled hidden>
-          ...
-        </option>
-        {lists.map((x, index) => (
-          <option key={index} value={x.id}>
-            {x.name}
+      <div className="lists">
+        <select name="lists" value={selectedList} onChange={handleSelect}>
+          <option value="" disabled hidden>
+            ...
           </option>
-        ))}
-      </select>
+          {lists.map((x, index) => (
+            <option key={index} value={x.id}>
+              {x.name}
+            </option>
+          ))}
+        </select>
+        <Link
+          to="/profile/lists"
+          style={{ paddingLeft: "20px", color: "whitesmoke" }}
+        >
+          {"Lists >"}
+        </Link>
+      </div>
 
       {selectedList && selectedListItems.length > 0 && (
         <MovieWrap
