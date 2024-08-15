@@ -14,7 +14,7 @@ export default function Catalog({
 }) {
   return (
     <>
-      <div className="page">
+      <div className="page-catalog">
         <MovieWrap
           h4={"Popular Now"}
           data={popular}
