@@ -43,7 +43,7 @@ export default function SearchResults() {
 
   return (
     <>
-      <div className="page">
+      <div className="page-catalog">
         <div className="results">
           {resultMovie.length > 0 && (
             <MovieWrap
