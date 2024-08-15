@@ -73,7 +73,7 @@ export default function ManageLists() {
   return (
     <>
       <Link to="/profile" style={{ color: "whitesmoke" }}>
-        Back
+        {"< Back"}
       </Link>
       <h1>List Manager</h1>
       <div className="page">
